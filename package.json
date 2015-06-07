@@ -1,0 +1,50 @@
+{
+  "name": "rest-io",
+  "version": "0.0.1",
+  "description": "REST resource generator",
+  "main": "lib/index.js",
+  "scripts": {
+    "clean": "rimraf lib dist build",
+    "ts": "tsc --module commonjs -t ES5 --outDir lib -p .",
+    "ts-watch": "tsc --module commonjs -t ES5 --outDir lib -p . -w",
+    "test": "mocha lib/test/**/*.spec.js -R mocha-better-spec-reporter --reporter-options stack-exclude=**/yadda/lib/**",
+    "test-watch": "watch \"npm run test\" lib/",
+    "watch": "parallelshell \"npm run ts-watch\" \"npm run test-watch\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EnoF/rest-io.git"
+  },
+  "keywords": [
+    "rest",
+    "express",
+    "mongoose",
+    "resource",
+    "framework"
+  ],
+  "author": "Andy Tang <andyt@live.nl>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EnoF/rest-io/issues"
+  },
+  "homepage": "https://github.com/EnoF/rest-io",
+  "dependencies": {
+    "body-parser": "^1.12.4",
+    "express": "^4.12.4",
+    "mongoose": "^4.0.5"
+  },
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.2.5",
+    "mocha-better-spec-reporter": "^2.0.1",
+    "mockgoose": "^2.0.3",
+    "parallelshell": "^1.1.1",
+    "rimraf": "^2.3.4",
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.7.0",
+    "supertest": "^1.0.1",
+    "typescript": "^1.5.0-beta",
+    "watch": "^0.16.0",
+    "yadda": "^0.11.5"
+  }
+}

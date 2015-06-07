@@ -1,0 +1,36 @@
+{
+  "version": "v4",
+  "repo": "borisyankov/DefinitelyTyped",
+  "ref": "master",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+    "mongoose/mongoose.d.ts": {
+      "commit": "8c7444882a2bc2ab87387f8f736a7d97e89b9c90"
+    },
+    "node/node.d.ts": {
+      "commit": "8c7444882a2bc2ab87387f8f736a7d97e89b9c90"
+    },
+    "express/express.d.ts": {
+      "commit": "8c7444882a2bc2ab87387f8f736a7d97e89b9c90"
+    },
+    "body-parser/body-parser.d.ts": {
+      "commit": "8c7444882a2bc2ab87387f8f736a7d97e89b9c90"
+    },
+    "chai/chai.d.ts": {
+      "commit": "8c7444882a2bc2ab87387f8f736a7d97e89b9c90"
+    },
+    "mocha/mocha.d.ts": {
+      "commit": "8c7444882a2bc2ab87387f8f736a7d97e89b9c90"
+    },
+    "sinon-chai/sinon-chai.d.ts": {
+      "commit": "8c7444882a2bc2ab87387f8f736a7d97e89b9c90"
+    },
+    "sinon/sinon.d.ts": {
+      "commit": "8c7444882a2bc2ab87387f8f736a7d97e89b9c90"
+    },
+    "supertest/supertest.d.ts": {
+      "commit": "8c7444882a2bc2ab87387f8f736a7d97e89b9c90"
+    }
+  }
+}
