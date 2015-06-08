@@ -35,9 +35,9 @@
   },
   "devDependencies": {
     "chai": "^2.3.0",
+    "chai-things": "^0.2.0",
     "mocha": "^2.2.5",
     "mocha-better-spec-reporter": "^2.0.1",
-    "mockgoose": "^2.0.3",
     "parallelshell": "^1.1.1",
     "rimraf": "^2.3.4",
     "sinon": "^1.14.1",

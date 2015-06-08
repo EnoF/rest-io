@@ -15,7 +15,16 @@
         "src/**/*.ts",
         "test/**/*.ts"
     ],
-    "files": [],
+    "files": [
+        "typings/tsd.d.ts",
+        "examples/foods/app.ts",
+        "examples/foods/food.ts",
+        "examples/foods/list.ts",
+        "src/index.ts",
+        "src/resource.ts",
+        "test/foods/definitions/foods.steps.ts",
+        "test/foods/foods.spec.ts"
+    ],
     "formatCodeOptions": {
         "indentSize": 2,
         "tabSize": 2,
