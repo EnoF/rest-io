@@ -10,12 +10,14 @@ mongoose.connect(mongoUrl);
 
 var Food = require('./food');
 var List = require('./list');
+var Fruit = require('./fruit');
 
 app.listen(port, () => {
   console.log('Server has started under port: ' + port);
   console.log('Resources loaded:');
   console.log(Food.url);
   console.log(List.url);
+  console.log(Fruit.url);
 });
 
 export = app;

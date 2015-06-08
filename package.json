@@ -2,7 +2,14 @@
   "name": "rest-io",
   "version": "0.0.1",
   "description": "REST resource generator",
-  "main": "lib/index.js",
+  "main": "lib/src/index.js",
+  "files": [
+    "lib/src"
+  ],
+  "directories": {
+    "lib": "lib/src",
+    "example": "lib/examples"
+  },
   "scripts": {
     "clean": "rimraf lib dist build",
     "ts": "tsc --module commonjs -t ES5 --outDir lib -p .",
@@ -28,7 +35,7 @@
     "url": "https://github.com/EnoF/rest-io/issues"
   },
   "homepage": "https://github.com/EnoF/rest-io",
-  "dependencies": {
+  "peerDependencies": {
     "body-parser": "^1.12.4",
     "express": "^4.12.4",
     "mongoose": "^4.0.5"

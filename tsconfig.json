@@ -19,6 +19,7 @@
         "typings/tsd.d.ts",
         "examples/foods/app.ts",
         "examples/foods/food.ts",
+        "examples/foods/fruit.ts",
         "examples/foods/list.ts",
         "src/index.ts",
         "src/resource.ts",
