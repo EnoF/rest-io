@@ -11,6 +11,10 @@ library
     this.request = supertest('http://localhost:3030');
     done();
   })
+  .when('I get all boomerangs with query "(.*)"', (query: string, done) => {
+    this.request = this.request.get('/api/boomerangs' + query);
+    done();
+  })
   .when('I get a boomerang', (done) => {
     this.request = this.request.get('/api/boomerangs/hello');
     done();
