@@ -8,6 +8,10 @@ import Application = express.Application;
 import Response = express.Response;
 
 class BoomerangResource extends Resource {
+  getById(req: Request, res: Response) {
+    res.status(600).send(req.params.boomerangId + ' ' + this.resDef.name);
+  }
+
   create(req: Request, res: Response) {
     res.status(600).send(req.body.message);
   }
