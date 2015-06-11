@@ -17,12 +17,17 @@
     ],
     "files": [
         "typings/tsd.d.ts",
+        "examples/customResource/app.ts",
+        "examples/customResource/resourceDefinitions/boomerangResource.ts",
+        "examples/customResource/resources/boomerang.ts",
         "examples/foods/app.ts",
         "examples/foods/resources/dish.ts",
         "examples/foods/resources/food.ts",
         "examples/foods/resources/list.ts",
         "src/index.ts",
         "src/resource.ts",
+        "test/customResource/customResource.spec.ts",
+        "test/customResource/definitions/customResource.steps.ts",
         "test/foods/definitions/foods.steps.ts",
         "test/foods/foods.spec.ts"
     ],

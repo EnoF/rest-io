@@ -61,17 +61,17 @@ module Resource {
       this.router = express.Router();
       this.router
         .route(this.url)
-        .get(this.getAll)
-        .post(this.create);
+        .get((req, res) => this.getAll(req, res))
+        .post((req, res) => this.create(req, res));
       this.router
         .route(this.parameterizedUrl)
-        .get(this.getById)
-        .put(this.update)
-        .delete(this.del);
+        .get((req, res) => this.getById(req, res))
+        .put((req, res) => this.update(req, res))
+        .delete((req, res) => this.del(req, res));
       app.use(this.router);
     }
 
-    getAll = (req: Request, res: Response) => {
+    getAll(req: Request, res: Response) {
       var query: Object = this.buildParentSearch(req);
       var getQuery = this.model.find(query);
       getQuery
@@ -92,7 +92,7 @@ module Resource {
       return query;
     }
 
-    getById = (req: Request, res: Response) => {
+    getById(req: Request, res: Response) {
       var id = req.params[this.paramId];
       this.model.findById(id)
         .populate(this.parentRef || '')
@@ -102,13 +102,13 @@ module Resource {
           (err: Error) => this.errorHandler(err, res));
     }
 
-    create = (req: Request, res: Response) => {
+    create(req: Request, res: Response) {
       this.model.create(req.body)
         .then((model: Document) => res.send(model),
           (err: Error) => this.errorHandler(err, res));
     }
 
-    update = (req: Request, res: Response) => {
+    update(req: Request, res: Response) {
       var id = req.params[this.paramId];
       this.model.findByIdAndUpdate(id, req.body)
         .exec()
@@ -116,7 +116,7 @@ module Resource {
           (err: Error) => this.errorHandler(err, res));
     }
 
-    del = (req: Request, res: Response) => {
+    del(req: Request, res: Response) {
       var id = req.params[this.paramId];
       this.model.findByIdAndRemove(id, req.body)
         .exec()
