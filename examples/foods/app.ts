@@ -7,7 +7,11 @@ restIO(app, {
   resources: __dirname + '/resources'
 });
 
-var mongoUrl = 'mongodb://localhost:27017/' + (process.env.DB || 'foods');
+var host = process.env.MONGO_PORT_27017_TCP_ADDR || 'localhost';
+var mongoUrl = 'mongodb://' + host + ':' + (process.env.MONGO_PORT || '27017') + '/';
+
+
+mongoUrl += (process.env.DB || 'foods');
 mongoose.connect(mongoUrl);
 
 app.listen(port, () => {
