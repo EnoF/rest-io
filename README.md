@@ -1,5 +1,6 @@
 # REST.IO
 Small extendable REST framework for express and mongoose.
+[![wercker status](https://app.wercker.com/status/9b1984ea7839955a2d1c26ff4e89d204/m/master "wercker status")](https://app.wercker.com/project/bykey/9b1984ea7839955a2d1c26ff4e89d204)
 
 ## Installation
 
