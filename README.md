@@ -5,14 +5,22 @@ Small extendable REST framework for express and mongoose.
 
     $ npm install rest-io --save
 
+## New in v1.0.0
+ * Automatic resource routing
+ * Sub resource binding
+ * Standard CRUD binding
+ * Bind all resources found in folder
+
 ## Features
  * Automatic resource routing
  * Sub resource binding
  * Standard CRUD binding
+ * Bind all resources found in folder
 
 Roadmap
- * Bind all resources found in folder
- * Make
+ * User authentication
+ * User permissions
+ * Documentation for custom resource actions
 
 ## Quick Start
 It's easy and fast to use rest.io. To start using rest.io see the next few steps:
