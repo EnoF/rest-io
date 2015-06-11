@@ -33,9 +33,11 @@ module Resource {
         this.baseUrl = resDef.parentResource.parameterizedUrl;
         this.parentRef = resDef.parentRef || resDef.parentResource.resDef.name;
       }
+      this.app = app;
       this.populate = resDef.populate;
       this.model = this.createModel(resDef);
-      this.setupRoutes(resDef);
+      this.resDef = resDef;
+      this.setupRoutes();
     }
 
     createModel(resDef: IResource) {
@@ -49,10 +51,9 @@ module Resource {
       });
     }
 
-    setupRoutes = (resDef: IResource) => {
+    setupRoutes() {
       this.url = this.baseUrl + '/';
-      this.url += resDef.plural || resDef.name + 's';
-      this.resDef = resDef;
+      this.url += this.resDef.plural || this.resDef.name + 's';
 
       this.paramId = this.resDef.name + 'Id';
       app.param(this.paramId, String);

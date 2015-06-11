@@ -17,3 +17,8 @@ Feature: Customize Resource
     Given the custom resource app is started
     When I post a new boomerang with "hello"
     Then I recieve the message "hello"
+
+  Scenario: New Binding
+    Given the custom resource app is started
+    When I add and retrieve a boomerang with name "banana"
+    Then I recieve an object with name "banana"

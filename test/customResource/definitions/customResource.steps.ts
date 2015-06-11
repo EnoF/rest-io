@@ -26,11 +26,26 @@ library
       });
     done();
   })
+  .when('I add and retrieve a boomerang with name "(.*)"', (name: string, done) => {
+    this.request = this.request.post('/api/boomerangs/add')
+      .send({
+        name: name
+      });
+    done();
+  })
   .then('I recieve the message "(.*)"', (message: string, done) => {
     this.request
       .end((req: supertest.SuperTest, res: supertest.Response) => {
         expect(res.status).to.equal(600);
         expect(res.text).to.equal(message);
+        done();
+      });
+  })
+  .then('I recieve an object with name "(.*)"', (name: string, done) => {
+    this.request
+      .end((req: supertest.SuperTest, res: supertest.Response) => {
+        expect(res.status).to.equal(707);
+        expect(res.body.name).to.equal(name);
         done();
       });
   });
