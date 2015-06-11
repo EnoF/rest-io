@@ -36,6 +36,7 @@
   },
   "homepage": "https://github.com/EnoF/rest-io",
   "peerDependencies": {
+    "auto-loader": "^0.2.0",
     "body-parser": "^1.12.4",
     "express": "^4.12.4",
     "mongoose": "^4.0.5"

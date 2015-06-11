@@ -4,9 +4,9 @@ import chai = require('chai');
 chai.use(require('chai-things'));
 var expect = chai.expect;
 
-import food = require('../../../examples/foods/food');
+import food = require('../../../examples/foods/resources/food');
 var Food = food.model;
-import list = require('../../../examples/foods/list');
+import list = require('../../../examples/foods/resources/list');
 var List = list.model;
 import supertest = require('supertest');
 
