@@ -1,6 +1,6 @@
 {
   "name": "rest-io",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "REST resource generator",
   "main": "lib/src/index.js",
   "files": [
@@ -8,7 +8,8 @@
   ],
   "directories": {
     "lib": "lib/src",
-    "example": "lib/examples"
+    "example": "lib/examples",
+    "doc": "docs"
   },
   "scripts": {
     "clean": "rimraf lib dist build",

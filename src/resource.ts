@@ -33,9 +33,11 @@ module Resource {
         this.baseUrl = resDef.parentResource.parameterizedUrl;
         this.parentRef = resDef.parentRef || resDef.parentResource.resDef.name;
       }
+      this.app = app;
       this.populate = resDef.populate;
       this.model = this.createModel(resDef);
-      this.setupRoutes(resDef);
+      this.resDef = resDef;
+      this.setupRoutes();
     }
 
     createModel(resDef: IResource) {
@@ -49,10 +51,9 @@ module Resource {
       });
     }
 
-    setupRoutes = (resDef: IResource) => {
+    setupRoutes() {
       this.url = this.baseUrl + '/';
-      this.url += resDef.plural || resDef.name + 's';
-      this.resDef = resDef;
+      this.url += this.resDef.plural || this.resDef.name + 's';
 
       this.paramId = this.resDef.name + 'Id';
       app.param(this.paramId, String);
@@ -61,17 +62,17 @@ module Resource {
       this.router = express.Router();
       this.router
         .route(this.url)
-        .get(this.getAll)
-        .post(this.create);
+        .get((req, res) => this.getAll(req, res))
+        .post((req, res) => this.create(req, res));
       this.router
         .route(this.parameterizedUrl)
-        .get(this.getById)
-        .put(this.update)
-        .delete(this.del);
+        .get((req, res) => this.getById(req, res))
+        .put((req, res) => this.update(req, res))
+        .delete((req, res) => this.del(req, res));
       app.use(this.router);
     }
 
-    getAll = (req: Request, res: Response) => {
+    getAll(req: Request, res: Response) {
       var query: Object = this.buildParentSearch(req);
       var getQuery = this.model.find(query);
       getQuery
@@ -92,7 +93,7 @@ module Resource {
       return query;
     }
 
-    getById = (req: Request, res: Response) => {
+    getById(req: Request, res: Response) {
       var id = req.params[this.paramId];
       this.model.findById(id)
         .populate(this.parentRef || '')
@@ -102,13 +103,13 @@ module Resource {
           (err: Error) => this.errorHandler(err, res));
     }
 
-    create = (req: Request, res: Response) => {
+    create(req: Request, res: Response) {
       this.model.create(req.body)
         .then((model: Document) => res.send(model),
           (err: Error) => this.errorHandler(err, res));
     }
 
-    update = (req: Request, res: Response) => {
+    update(req: Request, res: Response) {
       var id = req.params[this.paramId];
       this.model.findByIdAndUpdate(id, req.body)
         .exec()
@@ -116,7 +117,7 @@ module Resource {
           (err: Error) => this.errorHandler(err, res));
     }
 
-    del = (req: Request, res: Response) => {
+    del(req: Request, res: Response) {
       var id = req.params[this.paramId];
       this.model.findByIdAndRemove(id, req.body)
         .exec()
@@ -124,7 +125,7 @@ module Resource {
           (err: Error) => this.errorHandler(err, res));
     }
 
-    errorHandler = (err: Error, res: express.Response) => {
+    errorHandler(err: Error, res: express.Response) {
       console.log(err);
       res.status(500).send('internal server error');
     }

@@ -7,10 +7,7 @@ Small extendable REST framework for express and mongoose.
     $ npm install rest-io --save
 
 ## New in v1.0.0
- * Automatic resource routing
- * Sub resource binding
- * Standard CRUD binding
- * Bind all resources found in folder
+ * Custom Resource declarations
 
 ## Features
  * Automatic resource routing
@@ -21,7 +18,6 @@ Small extendable REST framework for express and mongoose.
 Roadmap
  * User authentication
  * User permissions
- * Documentation for custom resource actions
 
 ## Quick Start
 It's easy and fast to use rest.io. To start using rest.io see the next few steps:
@@ -72,10 +68,10 @@ Resource is now available as:
     PUT     /api/foods/:foodId
     DELETE  /api/foods/:foodId
 
-## restIO(app)
+## [restIO(app)](docs/api.md)
 Registers the app with `rest-io`. This allows `rest-io` to bind the routings automatically. The `bodyParser` module will be used to parse the `json` requests.
 
-## new restIO.Resource(config)
+## [new restIO.Resource(config)](docs/resource.md)
 Resources are routed automatically with the configuration provided. These configurations
 are provided to the `Resource` constructor.
 
