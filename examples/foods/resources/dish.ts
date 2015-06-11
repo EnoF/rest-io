@@ -1,14 +1,14 @@
 import mongoose = require('mongoose');
 import Schema = mongoose.Schema;
-import resource = require('../../src/resource');
+import resource = require('../../../src/resource');
 import Resource = resource.Resource;
 import Food = require('./food');
 
-var fruit = new Resource({
-  name: 'fruit',
+var dish = new Resource({
+  name: 'dish',
   model: {
     name: String,
-    food: {
+    mainIngredient: {
       type: Schema.Types.ObjectId,
       ref: 'Food'
     }
@@ -16,4 +16,4 @@ var fruit = new Resource({
   parentResource: Food
 });
 
-module.exports = fruit;
+module.exports = dish;

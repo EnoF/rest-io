@@ -1,6 +1,6 @@
 import mongoose = require('mongoose');
 import Schema = mongoose.Schema;
-import resource = require('../../src/resource');
+import resource = require('../../../src/resource');
 import Resource = resource.Resource;
 
 var listResource = new Resource({

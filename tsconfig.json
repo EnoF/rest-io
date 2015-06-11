@@ -18,9 +18,9 @@
     "files": [
         "typings/tsd.d.ts",
         "examples/foods/app.ts",
-        "examples/foods/food.ts",
-        "examples/foods/fruit.ts",
-        "examples/foods/list.ts",
+        "examples/foods/resources/dish.ts",
+        "examples/foods/resources/food.ts",
+        "examples/foods/resources/list.ts",
         "src/index.ts",
         "src/resource.ts",
         "test/foods/definitions/foods.steps.ts",
