@@ -18,7 +18,6 @@ restIO(app, {
 
 app.listen(port, () => {
   console.log('Server has started under port: ' + port);
-  console.log('Resources loaded:');
 });
 
 export = app;
