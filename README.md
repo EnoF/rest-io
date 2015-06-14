@@ -6,10 +6,12 @@ Small extendable REST framework for express and mongoose.
 
     $ npm install rest-io --save
 
-## New in v1.0.0
- * Custom Resource declarations
+## New in v1.1.0
+ * Multiple Mongoose Instance bug fix
+   *mongoose instance can now be passed along the configuration*
 
 ## Features
+ * Custom Resource declarations
  * Automatic resource routing
  * Sub resource binding
  * Standard CRUD binding
