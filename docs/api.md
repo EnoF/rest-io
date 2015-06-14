@@ -1,8 +1,10 @@
 # API
 API documentation for `rest-io`.
 
-## restIO(app)
+## restIO(app[, db])
 Registers the app with `rest-io`. This allows `rest-io` to bind the routings automatically. The `bodyParser` module will be used to parse the `json` requests.
+
+The `db` is required if you created an new instance of mongoose. 
 
 ## new restIO.Resource(config)
 Resources are routed automatically with the configuration provided. These configurations

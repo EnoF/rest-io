@@ -5,6 +5,7 @@ import Application = express.Application;
 import Response = express.Response;
 
 import mongoose = require('mongoose');
+import Mongoose = mongoose.Mongoose;
 import Schema = mongoose.Schema;
 import Model = mongoose.Model;
 import Document = mongoose.Document;
@@ -13,6 +14,7 @@ import ObjectId = mongoose.Types.ObjectId;
 module Resource {
   // The app reference it used to register params.
   var app;
+  var db: Mongoose;
 
   export class Resource {
     baseUrl: string = '/api';
@@ -41,8 +43,8 @@ module Resource {
     }
 
     createModel(resDef: IResource) {
-      var schema = new mongoose.Schema(resDef.model);
-      return mongoose.model(this.toClassName(resDef.name), schema);
+      var schema = new Schema(resDef.model);
+      return db.model(this.toClassName(resDef.name), schema);
     }
 
     toClassName(name: string) {
@@ -73,14 +75,18 @@ module Resource {
     }
 
     getAll(req: Request, res: Response) {
-      var query: Object = this.buildParentSearch(req);
-      var getQuery = this.model.find(query);
-      getQuery
-        .populate(this.parentRef || '')
-        .populate(this.populate || '')
-        .exec()
-        .then((result: Array<Document>) => res.send(result),
-          (err: Error) => this.errorHandler(err, res));
+      try {
+        var query: Object = this.buildParentSearch(req);
+        var getQuery = this.model.find(query);
+        getQuery
+          .populate(this.parentRef || '')
+          .populate(this.populate || '')
+          .exec()
+          .then((result: Array<Document>) => res.send(result),
+            (err: Error) => this.errorHandler(err, res));
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     buildParentSearch = (req: Request) => {
@@ -140,8 +146,9 @@ module Resource {
     parentResource?: Resource;
   }
 
-  export function registerApp(registerApp) {
+  export function registerApp(registerApp, connection: Mongoose) {
     app = registerApp;
+    db = connection || mongoose;
   }
 }
 
