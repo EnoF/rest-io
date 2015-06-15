@@ -96,6 +96,12 @@ module authorizedResource {
       res.status(401).send('unauthorized');
     }
 
+    baseGetAll = super.getAll;
+    baseGetById = super.getById;
+    baseCreate = super.create;
+    baseUpdate = super.update;
+    baseDel = super.del;
+
     getAll(req: Request, res: Response) {
       this.isAuthorized(req, this.roles.getAll)
         .then(() => super.getAll(req, res),

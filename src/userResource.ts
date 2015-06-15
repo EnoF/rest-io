@@ -69,15 +69,14 @@ class UserResource extends AuthorizedResource {
 
   update(req: Request, res: Response) {
     this.isAuthorized(req, this.roles.update)
-      .then(() => super.update(req, res),
+      .then(() => this.baseUpdate(req, res),
         (err) => {
           if (err.message === 'unauthorized' && this.isSelf(req)) {
-            return this.model.findByIdAndUpdate(req.params.userId, req.body);
+            this.baseUpdate(req, res);
+          } else {
+            this.sendUnauthorized(err, res);
           }
-          throw err;
-        })
-      .then((user) => res.send(user),
-        (err) => this.sendUnauthorized(err, res));
+        });
   }
 
   login(req: Request, res: Response) {
