@@ -54,3 +54,4 @@ Feature: Authorize
     Where:
       | UserName  | Subject   |
       | Foo       | EnoF      |
+      | Bar       | Foo       |

@@ -68,6 +68,7 @@ class UserResource extends AuthorizedResource {
   }
 
   update(req: Request, res: Response) {
+    delete req.body.password;
     this.isAuthorized(req, this.roles.update)
       .then(() => this.baseUpdate(req, res),
         (err) => {
