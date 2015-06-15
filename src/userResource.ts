@@ -24,7 +24,7 @@ class UserResource extends AuthorizedResource {
     getById: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
     create: [],
     update: [ROLES.MODERATOR, ROLES.ADMIN],
-    del: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN]
+    del: [ROLES.ADMIN]
   }
 
   createModel(resDef: IResource) {
@@ -74,6 +74,18 @@ class UserResource extends AuthorizedResource {
         (err) => {
           if (err.message === 'unauthorized' && this.isSelf(req)) {
             this.baseUpdate(req, res);
+          } else {
+            this.sendUnauthorized(err, res);
+          }
+        });
+  }
+
+  del(req: Request, res: Response) {
+    this.isAuthorized(req, this.roles.del)
+      .then(() => this.baseDel(req, res),
+        (err) => {
+          if (err.message === 'unauthorized' && this.isSelf(req)) {
+            this.baseDel(req, res);
           } else {
             this.sendUnauthorized(err, res);
           }

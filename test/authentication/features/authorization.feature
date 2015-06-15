@@ -55,3 +55,15 @@ Feature: Authorize
       | UserName  | Subject   |
       | Foo       | EnoF      |
       | Bar       | Foo       |
+
+  Scenario: Delete User [Subject] as [UserName]
+    Given I am logged in as "[UserName]"
+    When I delete a user "[Subject]"
+    Then the user is [Deleted]
+
+    Where:
+      | UserName  | Subject   | Deleted     |
+      | EnoF      | Banana    | deleted     |
+      | EnoF      | EnoF      | deleted     |
+      | Banana    | Banana    | deleted     |
+      | Banana    | Foo       | not deleted |

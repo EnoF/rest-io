@@ -98,6 +98,13 @@ library
       });
     done();
   })
+  .when('I delete a user "(.*)"', (subjectName: string, done) => {
+    this.subjectName = subjectName;
+    this.request = supertest('http://localhost:4000')
+      .del('/api/users/' + createIdBasedOnName(subjectName))
+      .set('Authorization', this.authToken);
+    done();
+  })
   .then('I expect to be logged in', (done) => {
     this.request
       .end((req: supertest.SuperTest, res: supertest.Response) => {
@@ -157,6 +164,21 @@ library
     done();
   })
   .then('the update is prevented', (done) => {
+    this.request
+      .end((req, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.text).to.equal('unauthorized');
+        done();
+      });
+  })
+  .then('the user is deleted', (done) => {
+    this.request
+      .end((req, res) => {
+        expect(res.status).to.equal(200);
+        done();
+      });
+  })
+  .then('the user is not deleted', (done) => {
     this.request
       .end((req, res) => {
         expect(res.status).to.equal(401);
