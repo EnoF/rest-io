@@ -25,3 +25,32 @@ Feature: Authorize
       | EnoF      | EnoF    | see     |
       | Bar       | EnoF    | not see |
       | EnoF      | Bar     | see     |
+
+  Scenario: Create User
+    Given I provide King and secret
+    When I create a new user with the provided credentials
+    Then the new user is created
+
+  Scenario: Update User [Subject] as [UserName]
+    Given I am logged in as "[UserName]"
+    When I update the username of "[Subject]" to "[NewName]"
+    Then the new user name is "[NewName]"
+      And the password is still "[Password]"
+
+    Where:
+      | UserName  | Subject   | NewName   | Password    |
+      | EnoF      | EnoF      | Andor     | secret      |
+      | EnoF      | Banana    | BanHammer | superSecret |
+      | Banana    | Banana    | King      | superSecret |
+      | Banana    | Foo       | Banzai    | bar123      |
+      | Foo       | Foo       | Baz       | bar123      |
+      | Bar       | Bar       | Dude      | foo!@#      |
+
+  Scenario: Prevent User [UserName] to update [Subject]
+    Given I am logged in as "[UserName]"
+    When I update the username of "[Subject]" to "test"
+    Then the update is prevented
+
+    Where:
+      | UserName  | Subject   |
+      | Foo       | EnoF      |

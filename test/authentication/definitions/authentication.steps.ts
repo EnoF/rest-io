@@ -65,6 +65,7 @@ library
     done();
   })
   .given('I am logged in as "(.*)"', (userName: string, done) => {
+    this.loggedInAs = userName;
     this.authToken = auth.createAuthToken(createIdBasedOnName(userName));
     done();
   })
@@ -79,6 +80,22 @@ library
       .get('/api/users/' + createIdBasedOnName(userName))
       .set('Authorization', this.authToken)
       .send(this.credentials);
+    done();
+  })
+  .when('I create a new user with the provided credentials', (done) => {
+    this.request = supertest('http://localhost:4000')
+      .post('/api/users')
+      .send(this.credentials);
+    done();
+  })
+  .when('I update the username of "(.*)" to "(.*)"', (subjectName: string, newName: string, done) => {
+    this.subjectName = subjectName;
+    this.request = supertest('http://localhost:4000')
+      .put('/api/users/' + createIdBasedOnName(subjectName))
+      .set('Authorization', this.authToken)
+      .send({
+        userName: newName
+      });
     done();
   })
   .then('I expect to be logged in', (done) => {
@@ -108,6 +125,40 @@ library
   .then('I can not see the user details', (done) => {
     this.request
       .end((req: supertest.SuperTest, res: supertest.Response) => {
+        expect(res.status).to.equal(401);
+        expect(res.text).to.equal('unauthorized');
+        done();
+      });
+  })
+  .then('the new user is created', (done) => {
+    this.request
+      .end((req: supertest.SuperTest, res: supertest.Response) => {
+        expect(res.status).to.equal(200);
+        expect(res.body._id).to.be.ok;
+        done();
+      });
+  })
+  .then('the new user name is "(.*)"', (newName: string, done) => {
+    this.request
+      .end((req, res) => {
+        expect(res.status).to.equal(200);
+        supertest('http://localhost:4000')
+          .get('/api/users/' + createIdBasedOnName(this.subjectName))
+          .set('Authorization', auth.createAuthToken(createIdBasedOnName('EnoF')))
+          .end((req, res) => {
+            expect(res.body.userName).to.equal(newName);
+            this.resBody = res.body;
+            done();
+          })
+      });
+  })
+  .then('the password is still "(.*)"', (password: string, done) => {
+    expect(this.resBody.password).to.equal(auth.encryptPassword(password));
+    done();
+  })
+  .then('the update is prevented', (done) => {
+    this.request
+      .end((req, res) => {
         expect(res.status).to.equal(401);
         expect(res.text).to.equal('unauthorized');
         done();

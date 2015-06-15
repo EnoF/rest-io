@@ -16,6 +16,7 @@ module authorizedResource {
 
   export var ROLES = {
     USER: 'USER',
+    SUPER_USER: 'SUPER_USER',
     MODERATOR: 'MODERATOR',
     ADMIN: 'ADMIN'
   };
@@ -25,11 +26,11 @@ module authorizedResource {
     maxDays: number = 7;
 
     roles: IMethodAccess = {
-      getAll: [ROLES.USER, ROLES.MODERATOR, ROLES.ADMIN],
-      getById: [ROLES.USER, ROLES.MODERATOR, ROLES.ADMIN],
-      create: [ROLES.USER, ROLES.MODERATOR, ROLES.ADMIN],
-      update: [ROLES.USER, ROLES.MODERATOR, ROLES.ADMIN],
-      del: [ROLES.USER, ROLES.MODERATOR, ROLES.ADMIN]
+      getAll: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
+      getById: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
+      create: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
+      update: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
+      del: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN]
     };
 
     isTokenExpired(createdAt: Date) {
@@ -91,38 +92,38 @@ module authorizedResource {
         });
     }
 
-    sendUnauthorized(res: Response) {
+    sendUnauthorized(error: Error, res: Response) {
       res.status(401).send('unauthorized');
     }
 
     getAll(req: Request, res: Response) {
       this.isAuthorized(req, this.roles.getAll)
         .then(() => super.getAll(req, res),
-          () => this.sendUnauthorized(res));
+          (err) => this.sendUnauthorized(err, res));
     }
 
     getById(req: Request, res: Response) {
       this.isAuthorized(req, this.roles.getById)
         .then(() => super.getById(req, res),
-          () => this.sendUnauthorized(res));
+          (err) => this.sendUnauthorized(err, res));
     }
 
     create(req: Request, res: Response) {
       this.isAuthorized(req, this.roles.create)
         .then(() => super.create(req, res),
-          () => this.sendUnauthorized(res));
+          (err) => this.sendUnauthorized(err, res));
     }
 
     update(req: Request, res: Response) {
       this.isAuthorized(req, this.roles.update)
         .then(() => super.update(req, res),
-          () => this.sendUnauthorized(res));
+          (err) => this.sendUnauthorized(err, res));
     }
 
     del(req: Request, res: Response) {
       this.isAuthorized(req, this.roles.del)
         .then(() => super.del(req, res),
-          () => this.sendUnauthorized(res));
+          (err) => this.sendUnauthorized(err, res));
     }
   }
 

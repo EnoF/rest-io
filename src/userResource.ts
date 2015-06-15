@@ -20,11 +20,11 @@ import Schema = mongoose.Schema;
 class UserResource extends AuthorizedResource {
 
   roles: IMethodAccess = {
-    getAll: [ROLES.USER, ROLES.MODERATOR, ROLES.ADMIN],
-    getById: [ROLES.USER, ROLES.MODERATOR, ROLES.ADMIN],
+    getAll: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
+    getById: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
     create: [],
-    update: [ROLES.USER, ROLES.MODERATOR, ROLES.ADMIN],
-    del: [ROLES.USER, ROLES.MODERATOR, ROLES.ADMIN]
+    update: [ROLES.MODERATOR, ROLES.ADMIN],
+    del: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN]
   }
 
   createModel(resDef: IResource) {
@@ -56,13 +56,28 @@ class UserResource extends AuthorizedResource {
       .post((req, res) => this.login(req, res));
   }
 
-  sendUnauthorized(res) {
-    res.status(401).send('unauthorized');
+  isSelf(req: Request) {
+    var authToken = req.header('Authorization');
+    var tokenDetails = auth.decryptAuthToken(authToken);
+    return tokenDetails.id === req.params.userId;
   }
 
   create(req: Request, res: Response) {
     req.body.password = auth.encryptPassword(req.body.password);
     super.create(req, res);
+  }
+
+  update(req: Request, res: Response) {
+    this.isAuthorized(req, this.roles.update)
+      .then(() => super.update(req, res),
+        (err) => {
+          if (err.message === 'unauthorized' && this.isSelf(req)) {
+            return this.model.findByIdAndUpdate(req.params.userId, req.body);
+          }
+          throw err;
+        })
+      .then((user) => res.send(user),
+        (err) => this.sendUnauthorized(err, res));
   }
 
   login(req: Request, res: Response) {
@@ -78,9 +93,9 @@ class UserResource extends AuthorizedResource {
             authToken: auth.createAuthToken(user._id.toString())
           });
         } else {
-          this.sendUnauthorized(res);
+          this.sendUnauthorized(new Error('incorrect login'), res);
         }
-      }, () => this.sendUnauthorized(res));
+      }, () => this.sendUnauthorized(new Error('cannot perform login'), res));
   }
 }
 
