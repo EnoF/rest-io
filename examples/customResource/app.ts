@@ -11,7 +11,7 @@ var db = new mongoose.Mongoose();
 mongoUrl += (process.env.DB || 'customResource');
 db.connect(mongoUrl);
 
-restIO(app, {
+new restIO(app, {
   db: db,
   resources: __dirname + '/resources'
 });

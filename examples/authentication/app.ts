@@ -11,7 +11,7 @@ var mongoUrl = 'mongodb://' + host + ':' + (process.env.MONGO_PORT || '27017') +
 mongoUrl += (process.env.DB || 'auth');
 db.connect(mongoUrl);
 
-restIO(app, {
+new restIO(app, {
   db: db,
   resources: __dirname + '/resources'
 });

@@ -6,9 +6,9 @@ Small extendable REST framework for express and mongoose.
 
     $ npm install rest-io --save
 
-## New in v1.1.0
- * Multiple Mongoose Instance bug fix
-   *mongoose instance can now be passed along the configuration*
+## New in v2.0.0
+ * User Authentication
+ * User Authorization
 
 ## Features
  * Custom Resource declarations
@@ -20,6 +20,12 @@ Small extendable REST framework for express and mongoose.
 Roadmap
  * User authentication
  * User permissions
+
+## Reference
+ * [API](/docs/api.md)
+ * [Resource](/docs/api.md)
+ * [AuthorizedResource](/docs/authorizedResource.md)
+ * [UserResource](/docs/user.md)
 
 ## Quick Start
 It's easy and fast to use rest.io. To start using rest.io see the next few steps:

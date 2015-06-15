@@ -25,7 +25,7 @@ module authorizedResource {
     methodAccess: IMethodAccess;
     maxDays: number = 7;
 
-    roles: IMethodAccess = {
+    permissions: IMethodAccess = {
       getAll: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
       getById: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
       create: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
@@ -103,31 +103,31 @@ module authorizedResource {
     baseDel = super.del;
 
     getAll(req: Request, res: Response) {
-      this.isAuthorized(req, this.roles.getAll)
+      this.isAuthorized(req, this.permissions.getAll)
         .then(() => super.getAll(req, res),
           (err) => this.sendUnauthorized(err, res));
     }
 
     getById(req: Request, res: Response) {
-      this.isAuthorized(req, this.roles.getById)
+      this.isAuthorized(req, this.permissions.getById)
         .then(() => super.getById(req, res),
           (err) => this.sendUnauthorized(err, res));
     }
 
     create(req: Request, res: Response) {
-      this.isAuthorized(req, this.roles.create)
+      this.isAuthorized(req, this.permissions.create)
         .then(() => super.create(req, res),
           (err) => this.sendUnauthorized(err, res));
     }
 
     update(req: Request, res: Response) {
-      this.isAuthorized(req, this.roles.update)
+      this.isAuthorized(req, this.permissions.update)
         .then(() => super.update(req, res),
           (err) => this.sendUnauthorized(err, res));
     }
 
     del(req: Request, res: Response) {
-      this.isAuthorized(req, this.roles.del)
+      this.isAuthorized(req, this.permissions.del)
         .then(() => super.del(req, res),
           (err) => this.sendUnauthorized(err, res));
     }

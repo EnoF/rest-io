@@ -19,7 +19,7 @@ import Schema = mongoose.Schema;
 
 class UserResource extends AuthorizedResource {
 
-  roles: IMethodAccess = {
+  permissions: IMethodAccess = {
     getAll: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
     getById: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
     create: [],
@@ -69,7 +69,7 @@ class UserResource extends AuthorizedResource {
 
   update(req: Request, res: Response) {
     delete req.body.password;
-    this.isAuthorized(req, this.roles.update)
+    this.isAuthorized(req, this.permissions.update)
       .then(() => this.baseUpdate(req, res),
         (err) => {
           if (err.message === 'unauthorized' && this.isSelf(req)) {
@@ -81,7 +81,7 @@ class UserResource extends AuthorizedResource {
   }
 
   del(req: Request, res: Response) {
-    this.isAuthorized(req, this.roles.del)
+    this.isAuthorized(req, this.permissions.del)
       .then(() => this.baseDel(req, res),
         (err) => {
           if (err.message === 'unauthorized' && this.isSelf(req)) {

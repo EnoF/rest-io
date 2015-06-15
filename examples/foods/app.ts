@@ -3,7 +3,7 @@ import restIO = require('../../src/index');
 import mongoose = require('mongoose');
 var app = express();
 var port = 3000;
-restIO(app, {
+new restIO(app, {
   resources: __dirname + '/resources'
 });
 
