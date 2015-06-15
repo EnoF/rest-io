@@ -1,3 +1,7 @@
+import authorizedResource = require('./authorizedResource');
+import AuthorizedResource = authorizedResource.AuthorizedResource;
+import IMethodAccess = authorizedResource.IMethodAccess;
+import ROLES = authorizedResource.ROLES;
 import resource = require('./resource');
 import Resource = resource.Resource;
 import IResource = resource.IResource;
@@ -13,7 +17,16 @@ import mongoose = require('mongoose');
 import Model = mongoose.Model;
 import Schema = mongoose.Schema;
 
-class UserResource extends Resource {
+class UserResource extends AuthorizedResource {
+
+  roles: IMethodAccess = {
+    getAll: [ROLES.USER, ROLES.MODERATOR, ROLES.ADMIN],
+    getById: [ROLES.USER, ROLES.MODERATOR, ROLES.ADMIN],
+    create: [],
+    update: [ROLES.USER, ROLES.MODERATOR, ROLES.ADMIN],
+    del: [ROLES.USER, ROLES.MODERATOR, ROLES.ADMIN]
+  }
+
   createModel(resDef: IResource) {
     this.ensureBaseUserModel(resDef.model);
     resDef.model.roles = [{

@@ -15,7 +15,7 @@ Feature: Authorize
     And <User><Foo><bar123><SUPER_USER>
     And <User><Bar><foo!@#><>
 
-  Scenario: View User Details
+  Scenario: View User Details [UserName] looking for [Subject]
     Given I am logged in as "[UserName]"
     When I view user details of "[Subject]"
     Then I can [See] the user details
@@ -24,3 +24,4 @@ Feature: Authorize
       | UserName  | Subject | See     |
       | EnoF      | EnoF    | see     |
       | Bar       | EnoF    | not see |
+      | EnoF      | Bar     | see     |

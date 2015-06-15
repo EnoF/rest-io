@@ -27,6 +27,7 @@
         "examples/foods/resources/food.ts",
         "examples/foods/resources/list.ts",
         "src/authentication.ts",
+        "src/authorizedResource.ts",
         "src/index.ts",
         "src/resource.ts",
         "src/userResource.ts",
