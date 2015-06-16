@@ -25,6 +25,7 @@ module Resource {
     parentResource: Resource;
     router: Router;
     app: Application;
+    db: Mongoose;
     paramId: string;
     parentRef: string;
     populate: string;
@@ -36,6 +37,7 @@ module Resource {
         this.parentRef = resDef.parentRef || resDef.parentResource.resDef.name;
       }
       this.app = app;
+      this.db = db;
       this.populate = resDef.populate;
       this.model = this.createModel(resDef);
       this.resDef = resDef;

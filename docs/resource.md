@@ -4,22 +4,26 @@
 ## Quick Start
 To create a Custom Resource you extend the Resource class:
 
-    var restIO = require('rest-io');
-    var Resource = restIO.Resource;
+```javascript
+var restIO = require('rest-io');
+var Resource = restIO.Resource;
 
-    function BananaResource() { }
+function BananaResource() { }
 
-    BananaResource.prototype = Object.create(Resource.prototype, {
-      ...
-    });
+BananaResource.prototype = Object.create(Resource.prototype, {
+  ...
+});
+```
 
 Now you can overwrite the standard calls:
 
-    BananaResource.prototype = Object.create(Resource.prototype, {
-      getAll: function (req, res) {
-        res.status(200).send('awesome!');
-      }
-    });
+```javascript
+BananaResource.prototype = Object.create(Resource.prototype, {
+  getAll: function (req, res) {
+    res.status(200).send('awesome!');
+  }
+});
+```
 
 ## API
 These are the functions you can overwrite or use:
