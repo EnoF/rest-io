@@ -8,8 +8,9 @@ import authorizedResource = require('./authorizedResource');
 var autoloader = require('auto-loader');
 
 class RestIO {
-  static UserResource = UserResource;
   static authorizedResource = authorizedResource;
+  static UserResource = UserResource;
+  static AuthorizedResource = authorizedResource.AuthorizedResource;
 
   constructor(app: express.Application, config?: RestIO.IRestIOConfig) {
     app.use(bodyParser.json());
