@@ -3,7 +3,11 @@
   "version": "2.0.0",
   "description": "REST resource generator",
   "main": "lib/src/index.js",
+  "typescript": {
+    "definitions": "./definitions/rest-io.d.ts"
+  },
   "files": [
+    "definitions/",
     "lib/src"
   ],
   "directories": {

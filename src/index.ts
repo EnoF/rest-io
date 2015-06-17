@@ -30,7 +30,7 @@ class RestIO {
 declare module RestIO {
   interface IRestIOConfig {
     resources: string;
-    db?: Mongoose
+    db?: Mongoose;
   }
 }
 

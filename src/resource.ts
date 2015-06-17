@@ -91,7 +91,7 @@ module Resource {
       }
     }
 
-    buildParentSearch = (req: Request) => {
+    buildParentSearch(req: Request) {
       var query = {};
       var resource: Resource = this;
       while (!!resource.parentRef) {
@@ -133,7 +133,7 @@ module Resource {
           (err: Error) => this.errorHandler(err, res));
     }
 
-    errorHandler(err: Error, res: express.Response) {
+    errorHandler(err: Error, res: Response) {
       console.log(err);
       res.status(500).send('internal server error');
     }
