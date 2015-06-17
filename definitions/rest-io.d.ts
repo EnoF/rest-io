@@ -6,7 +6,7 @@ declare module 'rest-io' {
   import mongoose = require('mongoose');
   import Mongoose = mongoose.Mongoose;
 
-  export function restIO(app: express.Application, config?: IRestIOConfig): RestIO;
+  function restIO(app: express.Application, config?: IRestIOConfig): RestIO;
 
   interface RestIO {
     resource: ResourceModule
@@ -48,7 +48,7 @@ declare module 'rest-io' {
     errorHandler(err: Error, res: Response)
   }
 
-  export interface IResource {
+  interface IResource {
     name: string;
     model: any;
     parentRef?: string;
@@ -106,4 +106,6 @@ declare module 'rest-io' {
 
     login(req: Request, res: Response)
   }
+
+  export = restIO;
 }
