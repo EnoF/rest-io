@@ -6,9 +6,8 @@ Small extendable REST framework for express and mongoose.
 
     $ npm install rest-io --save
 
-## New in v2.0.0
- * User Authentication
- * User Authorization
+## New in v2.1.0
+ * Added Typescript definitions
 
 ## Features
  * Custom Resource declarations
@@ -16,6 +15,8 @@ Small extendable REST framework for express and mongoose.
  * Sub resource binding
  * Standard CRUD binding
  * Bind all resources found in folder
+ * User Authentication
+ * User Authorization
 
 Roadmap
  * User authentication

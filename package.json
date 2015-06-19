@@ -1,9 +1,13 @@
 {
   "name": "rest-io",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "REST resource generator",
   "main": "lib/src/index.js",
+  "typescript": {
+    "definitions": "./definitions/rest-io.d.ts"
+  },
   "files": [
+    "definitions/",
     "lib/src"
   ],
   "directories": {
@@ -15,7 +19,7 @@
     "clean": "rimraf lib dist build",
     "ts": "tsc --module commonjs -t ES5 --out typings/rest-io/rest-io.ts --p . --declaration",
     "ts-watch": "tsc --module commonjs -t ES5 --outDir lib -p . -w",
-    "test": "mocha lib/test/**/*.spec.js -R mocha-better-spec-reporter --reporter-options stack-exclude=**/yadda/lib/**",
+    "test": "mocha lib/test/**/*.spec.js -R mocha-better-spec-reporter",
     "test-watch": "watch \"npm run test\" lib/",
     "watch": "parallelshell \"npm run ts-watch\" \"npm run test-watch\""
   },
