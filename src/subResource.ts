@@ -74,7 +74,7 @@ class SubResource extends Resource {
 
   update(req: Request, res: Response) {
     this.model.findOneAndUpdate(this.createFindQuery(req), {
-      $set: this.createSubUpdateQuery(req.body)
+      $set: this.createSubUpdateQuery(req)
     }).exec()
       .then((model: Document) => res.send(model),
         (err: Error) => this.errorHandler(err, res));
@@ -88,11 +88,11 @@ class SubResource extends Resource {
     return findQuery;
   }
 
-  createSubUpdateQuery(newSub) {
+  createSubUpdateQuery(req:Request) {
     var setQuery = {};
-    for (var prop in newSub) {
-      if(newSub.hasOwnProperty(prop)){
-        setQuery[`${this.resDef.plural}.$.${prop}`] = newSub[prop];
+    for (var prop in req.body) {
+      if(req.body.hasOwnProperty(prop)){
+        setQuery[`${this.resDef.plural}.$.${prop}`] = req.body[prop];
       }
     }
     return setQuery;

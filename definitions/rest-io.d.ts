@@ -107,5 +107,15 @@ declare module 'rest-io' {
     login(req: Request, res: Response)
   }
 
+  class SubResource extends Resource {
+    createProjectionQuery(req: Request)
+
+    createPullQuery(req: Request)
+
+    createFindQuery(req: Request)
+
+    createSubUpdateQuery(req: Request)
+  }
+
   export = restIO;
 }

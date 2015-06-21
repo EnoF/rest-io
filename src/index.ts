@@ -5,12 +5,14 @@ import mongoose = require('mongoose');
 import Mongoose = mongoose.Mongoose;
 import UserResource = require('./userResource');
 import authorizedResource = require('./authorizedResource');
+import SubResource = require('./subResource');
 var autoloader = require('auto-loader');
 
 class RestIO {
   static authorizedResource = authorizedResource;
   static UserResource = UserResource;
   static AuthorizedResource = authorizedResource.AuthorizedResource;
+  static SubResource = SubResource;
 
   constructor(app: express.Application, config?: RestIO.IRestIOConfig) {
     app.use(bodyParser.json());
