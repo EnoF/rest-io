@@ -15,7 +15,7 @@ Feature: Load Sub
       And <Sub><ParentB><SubD>
       And <Sub><ParentB><SubE>
 
-  Scenario: Load Sub Resources
+  Scenario: Load Sub Resources of [Parent]
     When I request all sub resources of "[Parent]"
     Then I expect to see sub resources "[SubSources]"
 
@@ -23,3 +23,15 @@ Feature: Load Sub
       | Parent  | SubSources      |
       | ParentA | SubA,SubB       |
       | ParentB | SubC,SubD,SubE  |
+
+  Scenario: Load Sub Resource [SubResource] of [Parent]
+    When I request sub resource "[SubResource]" of "[Parent]"
+    Then I expect to see sub resource "[SubResource]"
+
+    Where:
+      | Parent  | SubResource |
+      | ParentA | SubA        |
+      | ParentA | SubB        |
+      | ParentB | SubC        |
+      | ParentB | SubD        |
+      | ParentB | SubE        |

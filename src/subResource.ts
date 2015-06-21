@@ -28,6 +28,19 @@ class SubResource extends Resource {
         (err: Error) => this.errorHandler(err, res));
   }
 
+  getById(req: Request, res: Response) {
+    var projection = {};
+    projection[this.resDef.plural] = {
+      $elemMatch: {
+        _id: req.params[this.paramId]
+      }
+    }
+    this.model.findById(req.params[this.parentResource.paramId], projection)
+      .exec()
+      .then((model: Document) => res.send(model[this.resDef.plural][0]),
+        (err) => this.errorHandler(err, res));
+  }
+
   create(req: Request, res: Response) {
     var pushQuery = {};
     pushQuery[this.resDef.plural] = req.body;

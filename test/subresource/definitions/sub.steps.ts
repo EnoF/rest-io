@@ -52,6 +52,11 @@ library
       .get(`/api/parents/${createIdBasedOnName(parent) }/subs`);
     done();
   })
+  .when('I request sub resource "(.*)" of "(.*)"', (sub: string, parent: string, done) => {
+    this.request = supertest('http://localhost:5050')
+      .get(`/api/parents/${createIdBasedOnName(parent) }/subs/${createIdBasedOnName(sub) }`);
+    done();
+  })
   .then('I expect to see sub resources "(.*)"', (subsCSV: string, done) => {
     var subs = subsCSV.split(',');
     this.request.end((req, res) => {
@@ -59,6 +64,13 @@ library
       res.body.forEach((sub) => {
         expect(subs).to.include(sub.name);
       });
+      done();
+    });
+  })
+  .then('I expect to see sub resource "(.*)"', (sub: string, done) => {
+    this.request.end((req, res) => {
+      expect(res.status).to.equal(200);
+      expect(res.body.name).to.equal(sub);
       done();
     });
   });
