@@ -45,3 +45,23 @@ Feature: Authorized Sub
       | Parent  | Sub   | UserName  | See       |
       | ParentA | SubA  | EnoF      | see       |
       | ParentA | SubA  | Bar       | not see   |
+
+  Scenario: Update by id as [UserName]
+    Given I am logged in as "[UserName]"
+    When I update sub "[Sub]" of "[Parent]" with "[Name]"
+    Then I expect the sub [ToBe] updated
+
+    Where:
+      | Parent  | Sub   | UserName  | ToBe      | Name  |
+      | ParentA | SubA  | EnoF      | to be     | SubX  |
+      | ParentA | SubA  | Bar       | not to be | SubY  |
+
+  Scenario: Delete by id as [UserName]
+    Given I am logged in as "[UserName]"
+    When I delete sub "[Sub]" of "[Parent]"
+    Then I expect the sub [ToBe] updated
+
+    Where:
+      | Parent  | Sub   | UserName  | ToBe        |
+      | ParentA | SubA  | EnoF      | to be       |
+      | ParentA | SubA  | Bar       | not to be   |

@@ -135,7 +135,22 @@ library
   })
   .when('I view sub "(.*)" of "(.*)"', (sub: string, parent: string, done) => {
     this.request = supertest('http://localhost:4000')
-      .get(`/api/parents/${createIdBasedOnName(parent) }/subs/${createIdBasedOnName(sub)}`)
+      .get(`/api/parents/${createIdBasedOnName(parent) }/subs/${createIdBasedOnName(sub) }`)
+      .set('Authorization', this.authToken);
+    done();
+  })
+  .when('I update sub "(.*)" of "(.*)" with "(.*)"', (sub: string, parent: string, name: string, done) => {
+    this.request = supertest('http://localhost:4000')
+      .put(`/api/parents/${createIdBasedOnName(parent) }/subs/${createIdBasedOnName(sub) }`)
+      .send({
+        name: name
+      })
+      .set('Authorization', this.authToken);
+    done();
+  })
+  .when('I delete sub "(.*)" of "(.*)"', (sub: string, parent: string, done) => {
+    this.request = supertest('http://localhost:4000')
+      .del(`/api/parents/${createIdBasedOnName(parent) }/subs/${createIdBasedOnName(sub) }`)
       .set('Authorization', this.authToken);
     done();
   })
@@ -245,6 +260,19 @@ library
     });
   })
   .then('I expect to not see sub resource "(.*)"', (sub: string, done) => {
+    this.request.end((req, res) => {
+      expect(res.status).to.equal(401);
+      expect(res.text).to.equal('unauthorized');
+      done();
+    });
+  })
+  .then('I expect the sub to be updated', (done) => {
+    this.request.end((req, res) => {
+      expect(res.status).to.equal(200);
+      done();
+    });
+  })
+  .then('I expect the sub not to be updated', (done) => {
     this.request.end((req, res) => {
       expect(res.status).to.equal(401);
       expect(res.text).to.equal('unauthorized');
