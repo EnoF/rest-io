@@ -57,7 +57,8 @@ module Resource {
 
     setupRoutes() {
       this.url = this.baseUrl + '/';
-      this.url += this.resDef.plural || this.resDef.name + 's';
+      this.resDef.plural = this.resDef.plural || this.resDef.name + 's';
+      this.url += this.resDef.plural;
 
       this.paramId = this.resDef.name + 'Id';
       app.param(this.paramId, String);
@@ -87,7 +88,7 @@ module Resource {
           .then((result: Array<Document>) => res.send(result),
             (err: Error) => this.errorHandler(err, res));
       } catch (err) {
-        console.log(err);
+        this.errorHandler(err, res)
       }
     }
 

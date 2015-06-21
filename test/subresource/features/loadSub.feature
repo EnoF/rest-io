@@ -15,7 +15,6 @@ Feature: Load Sub
       And <Sub><ParentB><SubD>
       And <Sub><ParentB><SubE>
 
-  @only
   Scenario: Load Sub Resources
     When I request all sub resources of "[Parent]"
     Then I expect to see sub resources "[SubSources]"

@@ -3,7 +3,7 @@ import Schema = mongoose.Schema;
 import resource = require('../../../src/resource');
 import Resource = resource.Resource;
 
-var parent = new Resource({
+var parentResource = new Resource({
   name: 'parent',
   model: {
     name: String,
@@ -13,4 +13,4 @@ var parent = new Resource({
   }
 });
 
-module.exports = parent;
+export = parentResource;
