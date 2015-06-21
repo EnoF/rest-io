@@ -88,10 +88,10 @@ class SubResource extends Resource {
     return findQuery;
   }
 
-  createSubUpdateQuery(req:Request) {
+  createSubUpdateQuery(req: Request) {
     var setQuery = {};
     for (var prop in req.body) {
-      if(req.body.hasOwnProperty(prop)){
+      if (req.body.hasOwnProperty(prop)) {
         setQuery[`${this.resDef.plural}.$.${prop}`] = req.body[prop];
       }
     }
