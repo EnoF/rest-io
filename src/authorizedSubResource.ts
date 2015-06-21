@@ -24,20 +24,24 @@ class AuthorizedSubResource extends AuthorizedResource {
 
   getAll(req: Request, res: Response) {
     this.isAuthorized(req, this.permissions.getAll)
-      .then(() => {
-        SubResource.prototype.getAll.call(this, req, res);
-      }, (err: Error) => {
-        this.sendUnauthorized(err, res);
-      });
+      .then(() => SubResource.prototype.getAll.call(this, req, res),
+        (err: Error) => this.sendUnauthorized(err, res));
+  }
+
+  getById(req: Request, res: Response) {
+    this.isAuthorized(req, this.permissions.getById)
+      .then(() => SubResource.prototype.getById.call(this, req, res),
+        (err: Error) => this.sendUnauthorized(err, res));
   }
 
   create(req: Request, res: Response) {
     this.isAuthorized(req, this.permissions.create)
-      .then(() => {
-        SubResource.prototype.create.call(this, req, res);
-      }, (err: Error) => {
-        this.sendUnauthorized(err, res);
-      });
+      .then(() => SubResource.prototype.create.call(this, req, res),
+        (err: Error) => this.sendUnauthorized(err, res));
+  }
+
+  createProjectionQuery(req: Request) {
+    return SubResource.prototype.createProjectionQuery.call(this, req);
   }
 
   createPullQuery(req: Request) {

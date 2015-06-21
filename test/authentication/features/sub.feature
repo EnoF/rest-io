@@ -35,3 +35,13 @@ Feature: Authorized Sub
       | ParentA | SubA,SubB       | EnoF     | see      |
       | ParentB | SubC,SubD,SubE  | EnoF     | see      |
       | ParentA | SubA,SubB       | Bar      | not see  |
+
+  Scenario: View sub by id as [UserName]
+    Given I am logged in as "[UserName]"
+    When I view sub "[Sub]" of "[Parent]"
+    Then I expect to [See] sub resource "[Sub]"
+
+    Where:
+      | Parent  | Sub   | UserName  | See       |
+      | ParentA | SubA  | EnoF      | see       |
+      | ParentA | SubA  | Bar       | not see   |

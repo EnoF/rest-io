@@ -133,6 +133,12 @@ library
       .set('Authorization', this.authToken);
     done();
   })
+  .when('I view sub "(.*)" of "(.*)"', (sub: string, parent: string, done) => {
+    this.request = supertest('http://localhost:4000')
+      .get(`/api/parents/${createIdBasedOnName(parent) }/subs/${createIdBasedOnName(sub)}`)
+      .set('Authorization', this.authToken);
+    done();
+  })
   .then('I expect to be logged in', (done) => {
     this.request
       .end((req: supertest.SuperTest, res: supertest.Response) => {
@@ -225,6 +231,20 @@ library
     });
   })
   .then('I expect to not see sub resources', (done) => {
+    this.request.end((req, res) => {
+      expect(res.status).to.equal(401);
+      expect(res.text).to.equal('unauthorized');
+      done();
+    });
+  })
+  .then('I expect to see sub resource "(.*)"', (sub: string, done) => {
+    this.request.end((req, res) => {
+      expect(res.status).to.equal(200);
+      expect(res.body.name).to.equal(sub);
+      done();
+    });
+  })
+  .then('I expect to not see sub resource "(.*)"', (sub: string, done) => {
     this.request.end((req, res) => {
       expect(res.status).to.equal(401);
       expect(res.text).to.equal('unauthorized');
