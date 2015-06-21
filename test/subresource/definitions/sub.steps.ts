@@ -62,6 +62,17 @@ library
       .del(`/api/parents/${createIdBasedOnName(parent) }/subs/${createIdBasedOnName(sub) }`);
     done();
   })
+  .when('I update sub "(.*)" of (.*) with name "(.*)"', (sub: string, parent: string, name: string, done) => {
+    supertest('http://localhost:5050')
+      .put(`/api/parents/${createIdBasedOnName(parent) }/subs/${createIdBasedOnName(sub) }`)
+      .send({
+        name: name
+      })
+      .end((req, res) => {
+        expect(res.status).to.equal(200);
+        done();
+      });
+  })
   .then('I expect to see sub resources "(.*)"', (subsCSV: string, done) => {
     var subs = subsCSV.split(',');
     this.request.end((req, res) => {
