@@ -57,6 +57,11 @@ library
       .get(`/api/parents/${createIdBasedOnName(parent) }/subs/${createIdBasedOnName(sub) }`);
     done();
   })
+  .when('removing sub "(.*)" of (.*)', (sub: string, parent: string, done) => {
+    this.request = supertest('http://localhost:5050')
+      .del(`/api/parents/${createIdBasedOnName(parent) }/subs/${createIdBasedOnName(sub) }`);
+    done();
+  })
   .then('I expect to see sub resources "(.*)"', (subsCSV: string, done) => {
     var subs = subsCSV.split(',');
     this.request.end((req, res) => {
@@ -71,6 +76,12 @@ library
     this.request.end((req, res) => {
       expect(res.status).to.equal(200);
       expect(res.body.name).to.equal(sub);
+      done();
+    });
+  })
+  .then('I expect the sub to be removed', (done) => {
+    this.request.end((req, res) => {
+      expect(res.status).to.equal(200);
       done();
     });
   });

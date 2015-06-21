@@ -50,6 +50,18 @@ class SubResource extends Resource {
       .then((model: Document) => res.send(model),
         (err: Error) => this.errorHandler(err, res))
   }
+
+  del(req: Request, res: Response) {
+    var pullQuery = {};
+    pullQuery[this.resDef.plural] = {
+      _id: req.params[this.paramId]
+    };
+    this.model.findByIdAndUpdate(req.params[this.parentResource.paramId], {
+      $pull: pullQuery
+    }).exec()
+      .then((model: Document) => res.send(model),
+        (err: Error) => this.errorHandler(err, res));
+  }
 }
 
 interface ISubResource {
