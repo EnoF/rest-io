@@ -1,0 +1,26 @@
+Feature: Load Sub
+  As sub resource
+  I want to be addressed induvidually
+  So that my parent resource doesn't has to be bothered on all my actions
+
+  Background:
+
+    Given <Parent><Name>
+      And <Parent><ParentA>
+      And <Parent><ParentB>
+      And <Sub><Parent><Name>
+      And <Sub><ParentA><SubA>
+      And <Sub><ParentA><SubB>
+      And <Sub><ParentB><SubC>
+      And <Sub><ParentB><SubD>
+      And <Sub><ParentB><SubE>
+
+  @only
+  Scenario: Load Sub Resources
+    When I request all sub resources of "[Parent]"
+    Then I expect to see sub resources "[SubSources]"
+
+    Where:
+      | Parent  | SubSources      |
+      | ParentA | SubA,SubB       |
+      | ParentB | SubC,SubD,SubE  |

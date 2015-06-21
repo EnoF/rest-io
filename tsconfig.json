@@ -28,6 +28,8 @@
         "examples/foods/resources/dish.ts",
         "examples/foods/resources/food.ts",
         "examples/foods/resources/list.ts",
+        "examples/subresource/app.ts",
+        "examples/subresource/resources/parent.ts",
         "src/authentication.ts",
         "src/authorizedResource.ts",
         "src/index.ts",
@@ -38,7 +40,9 @@
         "test/customResource/customResource.spec.ts",
         "test/customResource/definitions/customResource.steps.ts",
         "test/foods/definitions/foods.steps.ts",
-        "test/foods/foods.spec.ts"
+        "test/foods/foods.spec.ts",
+        "test/subresource/definitions/sub.steps.ts",
+        "test/subresource/subresource.spec.ts"
     ],
     "formatCodeOptions": {
         "indentSize": 2,
