@@ -7,9 +7,8 @@ Small extendable REST framework for express and mongoose. [![wercker status](htt
 $ npm install rest-io --save
 ```
 
-## New in v3.0.0
-- [Sub Resource for Sub Documents](/docs/subResource.md)
-- [Authenticated Sub Resource for Sub Documents](/docs/authorizedSubResource.md)
+## New in v3.1.0
+- pluralize used for automatic pluralizing
 
 ## Features
 - Custom Resource declarations
@@ -19,6 +18,8 @@ $ npm install rest-io --save
 - Bind all resources found in folder
 - User Authentication
 - User Authorization
+- [Sub Resource for Sub Documents](/docs/subResource.md)
+- [Authenticated Sub Resource for Sub Documents](/docs/authorizedSubResource.md)
 - Typescript definitions
 
 Roadmap
@@ -102,5 +103,5 @@ name           | The name of the resource                                       
 model          | The mongoose `Schema` config                                          | Schema   | Mandatory
 parentRef      | The parent reference of the resource to be populated during retrieval | String   |
 populate       | The children to populate, space separated                             | String   |
-plural         | The plural form of the resource name                                  | String   | name + 's'
+plural         | The plural form of the resource name                                  | String   | pluralize
 parentResource | The parent of this resource                                           | Resource |

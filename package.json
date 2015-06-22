@@ -1,6 +1,6 @@
 {
   "name": "rest-io",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "REST resource generator",
   "main": "lib/src/index.js",
   "typescript": {
@@ -36,6 +36,9 @@
     "framework"
   ],
   "author": "Andy Tang <andyt@live.nl>",
+  "contributors":[
+    "Dominik Kukacka<dominik.kukacka@gmail.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/EnoF/rest-io/issues"
