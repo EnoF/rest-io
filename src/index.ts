@@ -1,9 +1,8 @@
+import {Mongoose} from 'mongoose';
 import express = require('express');
 import resource = require('./resource');
 import Resource = resource.Resource;
 import bodyParser = require('body-parser');
-import mongoose = require('mongoose');
-import Mongoose = mongoose.Mongoose;
 import UserResource = require('./userResource');
 import authorizedResource = require('./authorizedResource');
 import SubResource = require('./subResource');
@@ -18,13 +17,14 @@ class RestIO {
   static AuthorizedSubResource = AuthorizedSubResource;
   static Resource = Resource;
 
-  constructor(app: express.Application, config?: RestIO.IRestIOConfig) {
+  constructor(app: express.Application, config?: IRestIOConfig) {
     app.use(bodyParser.json());
     resource.registerApp(app, config.db);
     if (!!config) {
       var resources: Object = autoloader.load(config.resources);
       for (var i in resources) {
         if (resources.hasOwnProperty(i)) {
+          // access to trigger getter of auto-loader
           resources[i];
         }
       }
@@ -33,11 +33,9 @@ class RestIO {
   }
 }
 
-declare module RestIO {
-  interface IRestIOConfig {
-    resources: string;
-    db?: Mongoose;
-  }
+interface IRestIOConfig {
+  resources: string;
+  db?: Mongoose;
 }
 
 export = RestIO;

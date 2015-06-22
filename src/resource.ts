@@ -42,7 +42,7 @@ module Resource {
 
     createModel(resDef: IResource) {
       var schema = new Schema(resDef.model);
-      return db.model(this.toClassName(resDef.name), schema);
+      return this.db.model(this.toClassName(resDef.name), schema);
     }
 
     toClassName(name: string) {
