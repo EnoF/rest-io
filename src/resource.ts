@@ -5,6 +5,8 @@ import mongoose = require('mongoose');
 import {Mongoose, Schema, Model, Document, Types} from 'mongoose';
 import ObjectId = Types.ObjectId;
 
+import pluralize = require('pluralize');
+
 module Resource {
   // The app reference it used to register params.
   var app;
@@ -51,7 +53,7 @@ module Resource {
 
     setupRoutes() {
       this.url = `${this.baseUrl}/`;
-      this.resDef.plural = this.resDef.plural || `${this.resDef.name}s`;
+      this.resDef.plural = this.resDef.plural || pluralize.plural(this.resDef.name);
       this.url += this.resDef.plural;
 
       this.paramId = `${this.resDef.name}Id`;

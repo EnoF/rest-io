@@ -9,3 +9,4 @@
 /// <reference path="sinon-chai/sinon-chai.d.ts" />
 /// <reference path="sinon/sinon.d.ts" />
 /// <reference path="supertest/supertest.d.ts" />
+/// <reference path="pluralize/pluralize.d.ts" />
