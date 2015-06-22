@@ -50,13 +50,13 @@ module Resource {
     }
 
     setupRoutes() {
-      this.url = this.baseUrl + '/';
-      this.resDef.plural = this.resDef.plural || this.resDef.name + 's';
+      this.url = `${this.baseUrl}/`;
+      this.resDef.plural = this.resDef.plural || `${this.resDef.name}s`;
       this.url += this.resDef.plural;
 
-      this.paramId = this.resDef.name + 'Id';
+      this.paramId = `${this.resDef.name}Id`;
       app.param(this.paramId, String);
-      this.parameterizedUrl = this.url + '/:' + this.paramId;
+      this.parameterizedUrl = `${this.url}/:${this.paramId}`;
 
       this.router = express.Router();
       this.router

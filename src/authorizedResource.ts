@@ -1,15 +1,7 @@
-import resource = require('./resource');
-import Resource = resource.Resource;
-import IResource = resource.IResource;
-
-import express = require('express');
-import Request = express.Request;
-import Router = express.Router;
-import Application = express.Application;
-import Response = express.Response;
+import {Resource, IResource} from './resource';
+import {Request, Router, Application, Response} from 'express';
 
 import auth = require('./authentication');
-
 import mongoose = require('mongoose');
 
 module authorizedResource {
