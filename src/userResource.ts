@@ -1,21 +1,8 @@
-import authorizedResource = require('./authorizedResource');
-import AuthorizedResource = authorizedResource.AuthorizedResource;
-import IMethodAccess = authorizedResource.IMethodAccess;
-import ROLES = authorizedResource.ROLES;
-import resource = require('./resource');
-import Resource = resource.Resource;
-import IResource = resource.IResource;
-
-import express = require('express');
-import Request = express.Request;
-import Router = express.Router;
-import Application = express.Application;
-import Response = express.Response;
+import {AuthorizedResource, IMethodAccess, ROLES} from './authorizedResource';
+import {Resource, IResource} from './resource';
+import {Request, Router, Application, Response} from 'express';
+import {Model, Schema} from 'mongoose';
 import auth = require('./authentication');
-
-import mongoose = require('mongoose');
-import Model = mongoose.Model;
-import Schema = mongoose.Schema;
 
 class UserResource extends AuthorizedResource {
 

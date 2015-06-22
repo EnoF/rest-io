@@ -69,6 +69,28 @@ library
     this.authToken = auth.createAuthToken(createIdBasedOnName(userName));
     done();
   })
+  .given('<Parent><Name>', (done) => done())
+  .given('<Parent><(.*)>', (name: string, done) => {
+    supertest('http://localhost:4000')
+      .post('/api/parents')
+      .set('Authorization', this.authToken)
+      .send({
+        _id: createIdBasedOnName(name),
+        name: name
+      })
+      .end(() => done())
+  })
+  .given('<Sub><Parent><Name>', (done) => done())
+  .given('<Sub><(.*)><(.*)>', (parent: string, name: string, done) => {
+    supertest('http://localhost:4000')
+      .post(`/api/parents/${createIdBasedOnName(parent) }/subs`)
+      .set('Authorization', this.authToken)
+      .send({
+        _id: createIdBasedOnName(name),
+        name: name
+      })
+      .end(() => done());
+  })
   .when('I login with the provided credentials', (done) => {
     this.request = supertest('http://localhost:4000')
       .post('/api/users/login')
@@ -102,6 +124,33 @@ library
     this.subjectName = subjectName;
     this.request = supertest('http://localhost:4000')
       .del('/api/users/' + createIdBasedOnName(subjectName))
+      .set('Authorization', this.authToken);
+    done();
+  })
+  .when('I view all subs of "(.*)"', (parent: string, done) => {
+    this.request = supertest('http://localhost:4000')
+      .get(`/api/parents/${createIdBasedOnName(parent) }/subs`)
+      .set('Authorization', this.authToken);
+    done();
+  })
+  .when('I view sub "(.*)" of "(.*)"', (sub: string, parent: string, done) => {
+    this.request = supertest('http://localhost:4000')
+      .get(`/api/parents/${createIdBasedOnName(parent) }/subs/${createIdBasedOnName(sub) }`)
+      .set('Authorization', this.authToken);
+    done();
+  })
+  .when('I update sub "(.*)" of "(.*)" with "(.*)"', (sub: string, parent: string, name: string, done) => {
+    this.request = supertest('http://localhost:4000')
+      .put(`/api/parents/${createIdBasedOnName(parent) }/subs/${createIdBasedOnName(sub) }`)
+      .send({
+        name: name
+      })
+      .set('Authorization', this.authToken);
+    done();
+  })
+  .when('I delete sub "(.*)" of "(.*)"', (sub: string, parent: string, done) => {
+    this.request = supertest('http://localhost:4000')
+      .del(`/api/parents/${createIdBasedOnName(parent) }/subs/${createIdBasedOnName(sub) }`)
       .set('Authorization', this.authToken);
     done();
   })
@@ -185,6 +234,50 @@ library
         expect(res.text).to.equal('unauthorized');
         done();
       });
+  })
+  .then('I expect to see sub resources "(.*)"', (subsCSV: string, done) => {
+    var subs = subsCSV.split(',');
+    this.request.end((req, res) => {
+      expect(subs.length).to.equal(res.body.length);
+      res.body.forEach((sub) => {
+        expect(subs).to.include(sub.name);
+      });
+      done();
+    });
+  })
+  .then('I expect to not see sub resources', (done) => {
+    this.request.end((req, res) => {
+      expect(res.status).to.equal(401);
+      expect(res.text).to.equal('unauthorized');
+      done();
+    });
+  })
+  .then('I expect to see sub resource "(.*)"', (sub: string, done) => {
+    this.request.end((req, res) => {
+      expect(res.status).to.equal(200);
+      expect(res.body.name).to.equal(sub);
+      done();
+    });
+  })
+  .then('I expect to not see sub resource "(.*)"', (sub: string, done) => {
+    this.request.end((req, res) => {
+      expect(res.status).to.equal(401);
+      expect(res.text).to.equal('unauthorized');
+      done();
+    });
+  })
+  .then('I expect the sub to be updated', (done) => {
+    this.request.end((req, res) => {
+      expect(res.status).to.equal(200);
+      done();
+    });
+  })
+  .then('I expect the sub not to be updated', (done) => {
+    this.request.end((req, res) => {
+      expect(res.status).to.equal(401);
+      expect(res.text).to.equal('unauthorized');
+      done();
+    });
   });
 
 export = library;

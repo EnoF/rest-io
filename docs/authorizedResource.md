@@ -7,7 +7,7 @@ To create an Authorized Resource:
 ```javascript
 var restIO = require('rest-io');
 var authorizedResource = restIO.authorizedResource;
-var AuthorizedResource = authorizedResource.AuthorizedResource;
+var AuthorizedResource = restIO.AuthorizedResource;
 var ROLES = authorizedResource.ROLES;
 
 function BananaResource() { }

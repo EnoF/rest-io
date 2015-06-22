@@ -1,15 +1,9 @@
 import express = require('express');
-import Request = express.Request;
-import Router = express.Router;
-import Application = express.Application;
-import Response = express.Response;
+import {Request, Router, Application, Response} from 'express';
 
 import mongoose = require('mongoose');
-import Mongoose = mongoose.Mongoose;
-import Schema = mongoose.Schema;
-import Model = mongoose.Model;
-import Document = mongoose.Document;
-import ObjectId = mongoose.Types.ObjectId;
+import {Mongoose, Schema, Model, Document, Types} from 'mongoose';
+import ObjectId = Types.ObjectId;
 
 module Resource {
   // The app reference it used to register params.
@@ -56,12 +50,13 @@ module Resource {
     }
 
     setupRoutes() {
-      this.url = this.baseUrl + '/';
-      this.url += this.resDef.plural || this.resDef.name + 's';
+      this.url = `${this.baseUrl}/`;
+      this.resDef.plural = this.resDef.plural || `${this.resDef.name}s`;
+      this.url += this.resDef.plural;
 
-      this.paramId = this.resDef.name + 'Id';
+      this.paramId = `${this.resDef.name}Id`;
       app.param(this.paramId, String);
-      this.parameterizedUrl = this.url + '/:' + this.paramId;
+      this.parameterizedUrl = `${this.url}/:${this.paramId}`;
 
       this.router = express.Router();
       this.router
@@ -87,7 +82,7 @@ module Resource {
           .then((result: Array<Document>) => res.send(result),
             (err: Error) => this.errorHandler(err, res));
       } catch (err) {
-        console.log(err);
+        this.errorHandler(err, res)
       }
     }
 
