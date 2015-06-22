@@ -123,7 +123,7 @@ var post = new SubResource({
       type: Schema.Types.ObjectId,
       ref: 'Blog'
     }
-  }
+  },
   parentResource: blog
 });
 

@@ -21,7 +21,7 @@ Now you can overwrite the standard calls and authorizations:
 
 ```javascript
 BananaResource.prototype = Object.create(Resource.prototype, {
-  permissions: IMethodAccess = {
+  permissions = {
     getAll: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
     getById: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
     create: [ROLES.MODERATOR, ROLES.ADMIN],

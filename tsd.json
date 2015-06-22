@@ -31,6 +31,9 @@
     },
     "supertest/supertest.d.ts": {
       "commit": "8c7444882a2bc2ab87387f8f736a7d97e89b9c90"
+    },
+    "pluralize/pluralize.d.ts": {
+      "commit": "101a5daef4fc42eca0d447ba5d080248f80daf90"
     }
   }
 }

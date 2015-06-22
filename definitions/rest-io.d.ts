@@ -1,30 +1,42 @@
 declare module 'rest-io' {
-  import express = require('express');
-  import Request = express.Request;
-  import Response = express.Response;
+  import {Router, Application, Response, Request} from 'express';
 
-  import mongoose = require('mongoose');
-  import Mongoose = mongoose.Mongoose;
+  import {Mongoose, Schema, Model, Document, Types} from 'mongoose';
 
-  function restIO(app: express.Application, config?: IRestIOConfig): RestIO;
+  function restIO(app: Application, config?: IRestIOConfig): RestIO;
 
-  interface RestIO {
+  export interface RestIO {
     resource: ResourceModule
   }
 
-  interface IRestIOConfig {
+  export interface IRestIOConfig {
     resources: string;
     db?: Mongoose;
   }
 
-  interface ResourceModule {
-    Resource: Resource;
-    AuthorizedResource: AuthorizedResource;
+  export interface ResourceModule {
     authorizedResource: AuthorizedResourceModule;
+    AuthorizedResource: AuthorizedResource;
+    AuthorizedSubResource: AuthorizedSubResource;
+    Resource: Resource;
+    SubResource: SubResource;
     UserResource: UserResource;
   }
 
-  class Resource {
+  export class Resource {
+    baseUrl: string;
+    url: string;
+    parameterizedUrl: string;
+    model: Model<Document>;
+    resDef: IResource;
+    parentResource: Resource;
+    router: Router;
+    app: Application;
+    db: Mongoose;
+    paramId: string;
+    parentRef: string;
+    populate: string;
+
     constructor(resDef: IResource)
 
     createModel(resDef: IResource)
@@ -48,7 +60,7 @@ declare module 'rest-io' {
     errorHandler(err: Error, res: Response)
   }
 
-  interface IResource {
+  export interface IResource {
     name: string;
     model: any;
     parentRef?: string;
@@ -57,19 +69,19 @@ declare module 'rest-io' {
     parentResource?: Resource;
   }
 
-  interface AuthorizedResourceModule {
+  export interface AuthorizedResourceModule {
     AuthorizedResource: AuthorizedResource
     ROLES: Roles
   }
 
-  interface Roles {
+  export interface Roles {
     USER: string;
     SUPER_USER: string;
     MODERATOR: string;
     ADMIN: string;
   }
 
-  class AuthorizedResource extends Resource {
+  export class AuthorizedResource extends Resource {
     methodAccess: IMethodAccess;
 
     maxDays: number;
@@ -89,7 +101,7 @@ declare module 'rest-io' {
     sendUnauthorized(error: Error, res: Response)
   }
 
-  interface IMethodAccess {
+  export interface IMethodAccess {
     getAll: Array<string>;
     getById: Array<string>;
     create: Array<string>;
@@ -97,7 +109,7 @@ declare module 'rest-io' {
     del: Array<string>;
   }
 
-  class UserResource extends AuthorizedResource {
+  export class UserResource extends AuthorizedResource {
     ensureBaseUserModel(model: any)
 
     createRoleModel()
@@ -107,7 +119,9 @@ declare module 'rest-io' {
     login(req: Request, res: Response)
   }
 
-  class SubResource extends Resource {
+  export class SubResource extends Resource {
+    constructor(subResDef: ISubResource)
+
     createProjectionQuery(req: Request)
 
     createPullQuery(req: Request)
@@ -117,5 +131,22 @@ declare module 'rest-io' {
     createSubUpdateQuery(req: Request)
   }
 
-  export = restIO;
+  export class AuthorizedSubResource extends AuthorizedResource {
+    constructor(subResDef: ISubResource)
+
+    createProjectionQuery(req: Request)
+
+    createPullQuery(req: Request)
+
+    createFindQuery(req: Request)
+
+    createSubUpdateQuery(req: Request)
+  }
+
+  export interface ISubResource {
+    name: string;
+    plural?: string;
+    parentResource: Resource;
+    populate?: string;
+  }
 }
