@@ -8,7 +8,11 @@ var parentResource = new Resource({
   model: {
     name: String,
     subs: [{
-      name: String
+      name: String,
+      ref: {
+        type: Schema.Types.ObjectId,
+        ref: 'Ref'
+      }
     }]
   }
 });

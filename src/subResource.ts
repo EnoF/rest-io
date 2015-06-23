@@ -23,6 +23,7 @@ class SubResource extends Resource {
 
   getAll(req: Request, res: Response) {
     this.model.findById(req.params[this.parentResource.paramId])
+      .populate(this.resDef.populate || '')
       .exec()
       .then((model: Document) => res.send(model[this.resDef.plural]),
         (err: Error) => this.errorHandler(err, res));
@@ -31,6 +32,7 @@ class SubResource extends Resource {
   getById(req: Request, res: Response) {
     this.model.findById(req.params[this.parentResource.paramId],
       this.createProjectionQuery(req))
+      .populate(this.resDef.populate || '')
       .exec()
       .then((model: Document) => res.send(model[this.resDef.plural][0]),
         (err) => this.errorHandler(err, res));
