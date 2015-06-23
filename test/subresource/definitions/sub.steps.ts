@@ -37,6 +37,16 @@ library
       })
       .end(() => done())
   })
+  .given('<Ref><Name>', (done) => done())
+  .given('<Ref><(.*)>', (name: string, done) => {
+    supertest('http://localhost:5050')
+      .post(`/api/refs`)
+      .send({
+        _id: createIdBasedOnName(name),
+        name: name
+      })
+      .end(() => done());
+  })
   .given('<Sub><Parent><Name>', (done) => done())
   .given('<Sub><(.*)><(.*)>', (parent: string, name: string, done) => {
     supertest('http://localhost:5050')
@@ -46,6 +56,19 @@ library
         name: name
       })
       .end(() => done());
+  })
+  .given('<Sub><Parent><Name><Ref><Name>', (done) => done())
+  .given('<Sub><(.*)><(.*)><Ref><(.*)>', (parent: string, name: string, ref: string, done) => {
+    supertest('http://localhost:5050')
+      .post(`/api/parents/${createIdBasedOnName(parent) }/subs`)
+      .send({
+        _id: createIdBasedOnName(name),
+        name: name,
+        ref: createIdBasedOnName(ref)
+      })
+      .end(() => {
+        done()
+      });
   })
   .when('I request all sub resources of "(.*)"', (parent: string, done) => {
     this.request = supertest(`http://localhost:5050`)
@@ -87,6 +110,7 @@ library
     this.request.end((req, res) => {
       expect(res.status).to.equal(200);
       expect(res.body.name).to.equal(sub);
+      this.sub = res.body;
       done();
     });
   })
@@ -95,6 +119,10 @@ library
       expect(res.status).to.equal(200);
       done();
     });
+  })
+  .then('I expect to see ref "(.*)" populated', (ref: string, done) => {
+    expect(this.sub.ref.name).to.equal(ref);
+    done();
   });
 
 module.exports = library;

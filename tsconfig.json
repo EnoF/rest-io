@@ -32,6 +32,7 @@
         "examples/foods/resources/list.ts",
         "examples/subresource/app.ts",
         "examples/subresource/resources/parent.ts",
+        "examples/subresource/resources/ref.ts",
         "examples/subresource/resources/sub.ts",
         "src/authentication.ts",
         "src/authorizedResource.ts",
