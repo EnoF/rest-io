@@ -7,8 +7,8 @@ Small extendable REST framework for express and mongoose. [![wercker status](htt
 $ npm install rest-io --save
 ```
 
-## New in v3.1.0
-- pluralize used for automatic pluralizing
+## New in v3.2.0
+- Sub Documents can be populated
 
 ## Features
 - Custom Resource declarations
@@ -21,6 +21,7 @@ $ npm install rest-io --save
 - [Sub Resource for Sub Documents](/docs/subResource.md)
 - [Authenticated Sub Resource for Sub Documents](/docs/authorizedSubResource.md)
 - Typescript definitions
+- pluralize used for automatic pluralizing
 
 Roadmap
 - Resource query/searching
