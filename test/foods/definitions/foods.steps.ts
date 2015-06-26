@@ -73,6 +73,10 @@ library
     this.request = this.request.get('/api/lists');
     done();
   })
+  .when('I query for "(.*)" with "(.*)"', (attr: string, query: string, done) => {
+    this.request = this.request.get(`/api/foods?${attr}=${query}`);
+    done();
+  })
   .then('I expect to see food "(.*)" on position (.*)',
     (food: string, position: string, done) => {
       this.request
@@ -106,6 +110,21 @@ library
           });
           done();
         })
+    })
+  .then('I expect the results to be "(.*)"', (results: string, done) => {
+    this.request.end((req, res) => {
+      expect(res.status).to.equal(200);
+      if (!results) {
+        var foods: Array<string> = [];
+      } else {
+        var foods = results.split(',');
+      }
+      expect(foods.length).to.equal(res.body.length);
+      res.body.forEach((food) => {
+        expect(foods).to.include(food.name);
+      });
+      done();
     });
+  });
 
 module.exports = library;

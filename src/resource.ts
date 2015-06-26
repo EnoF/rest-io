@@ -75,7 +75,7 @@ module Resource {
 
     getAll(req: Request, res: Response) {
       try {
-        var query: Object = this.buildParentSearch(req);
+        var query: Object = this.buildSearchQuery(req);
         var getQuery = this.model.find(query);
         getQuery
           .populate(this.parentRef || '')
@@ -88,8 +88,29 @@ module Resource {
       }
     }
 
-    buildParentSearch(req: Request) {
+    buildSearchQuery(req: Request) {
       var query = {};
+      for (var attr in req.query) {
+        // ignore populate attribute
+        if (req.query.hasOwnProperty(attr) && attr !== 'populate') {
+          query[attr] = this.createRegex(req.query[attr]);
+        }
+      }
+      this.buildParentSearch(req, query);
+      return query;
+    }
+
+    createRegex(query: string) {
+      if (!query.match(/\//)) {
+        query = `/${query}/`;
+      }
+      var splitQuery = query.split('/');
+      var modifier = splitQuery.pop();
+      splitQuery.shift();
+      return new RegExp(splitQuery.join('/'), modifier);
+    }
+
+    buildParentSearch(req: Request, query) {
       var resource: Resource = this;
       while (!!resource.parentRef) {
         query[resource.parentRef] = new ObjectId(req.params[resource.parentResource.paramId]);
