@@ -5,13 +5,13 @@ Feature: Query Available Foods
 
   Background:
 
-  Given <Food><Name>
-    And <Food><Banana>
-    And <Food><Banana Soup>
-    And <Food><Apple>
-    And <Food><Steak>
-    And <Food><Bacon>
-    And <Food><Egg>
+  Given <Food><Name><Weight>
+    And <Food><Banana><1000>
+    And <Food><Banana Soup><500>
+    And <Food><Apple><200>
+    And <Food><Steak><400>
+    And <Food><Bacon><200>
+    And <Food><Egg><100>
 
   Scenario: Query foods by attribute [Attr] [Query]
     Given the food app is started
@@ -19,9 +19,11 @@ Feature: Query Available Foods
     Then I expect the results to be "[Results]"
 
     Where:
-      | Attr      | Query         | Results             |
-      | name      | /banana/i     | Banana,Banana Soup  |
-      | name      | banana        |                     |
-      | name      | Banana        | Banana,Banana Soup  |
-      | name      | /^Banana$/    | Banana              |
-      | name      | /soup/i       | Banana Soup         |
+      | Attr      | Query           | Results                 |
+      | name      | /banana/i       | Banana,Banana Soup      |
+      | name      | banana          |                         |
+      | name      | Banana          | Banana,Banana Soup      |
+      | name      | /^Banana$/      | Banana                  |
+      | name      | /soup/i         | Banana Soup             |
+      | weight    | { "$gt": 400 }  | Banana,Banana Soup      |
+      | weight    | { "$lt": 500 }  | Apple,Bacon,Steak,Egg   |

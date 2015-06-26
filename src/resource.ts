@@ -93,11 +93,19 @@ module Resource {
       for (var attr in req.query) {
         // ignore populate attribute
         if (req.query.hasOwnProperty(attr) && attr !== 'populate') {
-          query[attr] = this.createRegex(req.query[attr]);
+          query[attr] = this.createQuery(req.query[attr]);
         }
       }
       this.buildParentSearch(req, query);
       return query;
+    }
+
+    createQuery(query: string) {
+      try {
+        return JSON.parse(query);
+      } catch (error) {
+        return this.createRegex(query);
+      }
     }
 
     createRegex(query: string) {

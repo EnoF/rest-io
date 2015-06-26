@@ -31,14 +31,15 @@ function convertToHex(str) {
 }
 
 library
-  .given('<Food><Name>', (done) => {
+  .given('<Food><Name><Weight>', (done) => {
     this.request = supertest('http://localhost:3000');
     done();
   })
-  .given('<Food><(.*)>', (name: string, done) => {
+  .given('<Food><(.*)><(.*)>', (name: string, weight: string, done) => {
     Food.create({
       _id: createIdBasedOnName(name),
-      name: name
+      name: name,
+      weight: parseInt(weight, 10)
     }, (err, food) => {
       done();
     });

@@ -6,7 +6,8 @@ import Resource = resource.Resource;
 var foodResource = new Resource({
   name: 'food',
   model: {
-    name: String
+    name: String,
+    weight: Number
   }
 });
 
