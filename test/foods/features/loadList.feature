@@ -5,12 +5,12 @@ Feature: Load Available lists
 
   Background:
 
-  Given <Food><Name>
-    And <Food><Banana>
-    And <Food><Apple>
-    And <Food><Steak>
-    And <Food><Bacon>
-    And <Food><Egg>
+  Given <Food><Name><Weight>
+    And <Food><Banana><1000>
+    And <Food><Apple><200>
+    And <Food><Steak><400>
+    And <Food><Bacon><200>
+    And <Food><Egg><100>
     And <List><Name><Fruits>
     And <List><Fruits><Apple,Banana>
     And <List><Breakfast><Bacon,Egg>

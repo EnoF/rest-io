@@ -8,6 +8,8 @@ import food = require('../../../examples/foods/resources/food');
 var Food = food.model;
 import list = require('../../../examples/foods/resources/list');
 var List = list.model;
+import dish = require('../../../examples/foods/resources/dish');
+var Dish = dish.model;
 import supertest = require('supertest');
 
 function createIdBasedOnName(name: string) {
@@ -31,14 +33,15 @@ function convertToHex(str) {
 }
 
 library
-  .given('<Food><Name>', (done) => {
+  .given('<Food><Name><Weight>', (done) => {
     this.request = supertest('http://localhost:3000');
     done();
   })
-  .given('<Food><(.*)>', (name: string, done) => {
+  .given('<Food><(.*)><(.*)>', (name: string, weight: string, done) => {
     Food.create({
       _id: createIdBasedOnName(name),
-      name: name
+      name: name,
+      weight: parseInt(weight, 10)
     }, (err, food) => {
       done();
     });
@@ -64,6 +67,14 @@ library
         });
     });
   })
+  .given('<Dish><Name><Food>', (done) => done())
+  .given('<Dish><(.*)><(.*)>', (name: string, food: string, done) => {
+    Dish.create({
+      _id: createIdBasedOnName(name),
+      name: name,
+      mainIngredient: createIdBasedOnName(food)
+    }).then(() => done());
+  })
   .given('the food app is started', (done) => done())
   .when('I request all food', (done) => {
     this.request = this.request.get('/api/foods');
@@ -71,6 +82,14 @@ library
   })
   .when('I request all lists', (done) => {
     this.request = this.request.get('/api/lists');
+    done();
+  })
+  .when('I query for "(.*)" with "(.*)"', (attr: string, query: string, done) => {
+    this.request = this.request.get(`/api/foods?${attr}=${query}`);
+    done();
+  })
+  .when('I query attr "(.*)" with "(.*)" and populate "(.*)" of "(.*)"', (attr: string, query: string, populate: string, food: string, done) => {
+    this.request = this.request.get(`/api/dishes?${attr}=${query}&populate=${populate}`);
     done();
   })
   .then('I expect to see food "(.*)" on position (.*)',
@@ -106,6 +125,47 @@ library
           });
           done();
         })
+    })
+  .then('I expect the results to be "(.*)"', (results: string, done) => {
+    this.request.end((req, res) => {
+      expect(res.status).to.equal(200);
+      if (!results) {
+        var foods: Array<string> = [];
+      } else {
+        var foods = results.split(',');
+      }
+      expect(foods.length).to.equal(res.body.length);
+      res.body.forEach((food) => {
+        expect(foods).to.include(food.name);
+      });
+      done();
     });
+  })
+  .then('I expect to see dishes "(.*)"', (results: string, done) => {
+    this.request.end((req, res) => {
+      expect(res.status).to.equal(200);
+      this.res = res.body;
+      if (!results) {
+        var dishes: Array<string> = [];
+      } else {
+        var dishes = results.split(',');
+      }
+      expect(dishes.length).to.equal(res.body.length);
+      done();
+    });
+  })
+  .then('I expect the main ingredient to be populated', (done) => {
+    this.res.forEach((dish) => {
+      expect(dish.name).to.be.ok;
+      expect(typeof dish.mainIngredient._id).to.equal('string');
+      done();
+    });
+  })
+  .then('I expect the main ingredient not to be populated', (done) => {
+    this.res.forEach((dish) => {
+      expect(typeof dish.mainIngredient).to.equal('string');
+      done();
+    });
+  });
 
 module.exports = library;

@@ -13,7 +13,8 @@ var dish = new Resource({
       ref: 'Food'
     }
   },
-  parentResource: Food
+  parentResource: Food,
+  parentRef: 'mainIngredient'
 });
 
-module.exports = dish;
+export = dish;
