@@ -7,8 +7,9 @@ Small extendable REST framework for express and mongoose. [![wercker status](htt
 $ npm install rest-io --save
 ```
 
-## New in v3.2.0
-- Sub Documents can be populated
+## New in v4.0.0
+- all resources are [searchable](/docs/search.md)
+- all resources have [population](/docs/populate.md) controllable
 
 ## Features
 - Custom Resource declarations
@@ -21,11 +22,15 @@ $ npm install rest-io --save
 - [Sub Resource for Sub Documents](/docs/subResource.md)
 - [Authenticated Sub Resource for Sub Documents](/docs/authorizedSubResource.md)
 - Typescript definitions
+- Sub Documents can be populated
 - pluralize used for automatic pluralizing
 
 Roadmap
-- Resource query/searching
-- Resource population control via query
+- More default operations:
+  - count
+  - exists
+  - batch update
+- Documentation generation
 
 ## Reference
 - [API](/docs/api.md)

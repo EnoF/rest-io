@@ -160,8 +160,7 @@ module Resource {
     getById(req: Request, res: Response) {
       var id = req.params[this.paramId];
       this.model.findById(id)
-        .populate(this.parentRef || '')
-        .populate(this.populate || '')
+        .populate(this.buildPopulateQuery(req))
         .exec()
         .then((model: Document) => res.send(model),
           (err: Error) => this.errorHandler(err, res));
