@@ -13,7 +13,9 @@ module Resource {
   var db: Mongoose;
 
   export class Resource {
-    baseUrl: string = '/api';
+    static BASE_URL = '/api';
+
+    baseUrl: string = Resource.BASE_URL;
     url: string;
     parameterizedUrl: string;
     model: Model<Document>;
@@ -70,7 +72,23 @@ module Resource {
         .get((req, res) => this.getById(req, res))
         .put((req, res) => this.update(req, res))
         .delete((req, res) => this.del(req, res));
+      this.setupRecursiveRoutes();
       app.use(this.router);
+    }
+
+    setupRecursiveRoutes() {
+      var resource: Resource = this.parentResource;
+      if (!!resource) {
+        // Ensure the getter on root level
+        this.router.route(`${Resource.BASE_URL}/${this.resDef.plural}`)
+          .get((req, res) => this.getAll(req, res));
+        // Setup recursively on all parent resources a getter
+        while (!!resource && !!resource.parentRef) {
+          resource = resource.parentResource;
+          this.router.route(`${resource.url}/${this.resDef.plural}`)
+            .get((req, res) => this.getAll(req, res));
+        }
+      }
     }
 
     getAll(req: Request, res: Response) {
@@ -78,13 +96,20 @@ module Resource {
         var query: Object = this.buildSearchQuery(req);
         var getQuery = this.model.find(query);
         getQuery
-          .populate(this.parentRef || '')
-          .populate(this.populate || '')
+          .populate(this.buildPopulateQuery(req))
           .exec()
           .then((result: Array<Document>) => res.send(result),
             (err: Error) => this.errorHandler(err, res));
       } catch (err) {
         this.errorHandler(err, res)
+      }
+    }
+
+    buildPopulateQuery(req: Request) {
+      if (typeof req.query.populate === 'string') {
+        return req.query.populate;
+      } else {
+        return `${this.parentRef} ${this.populate}`;
       }
     }
 
@@ -121,7 +146,12 @@ module Resource {
     buildParentSearch(req: Request, query) {
       var resource: Resource = this;
       while (!!resource.parentRef) {
-        query[resource.parentRef] = new ObjectId(req.params[resource.parentResource.paramId]);
+        var id = req.params[resource.parentResource.paramId];
+        if (!!id) {
+          query[resource.parentRef] = new ObjectId(id);
+        } else {
+          break;
+        }
         resource = resource.parentResource;
       }
       return query;
