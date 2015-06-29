@@ -76,6 +76,7 @@ POST   | /api/blogs                       | create
 GET    | /api/blogs/:blogId               | get by id
 PUT    | /api/blogs/:blogId               | update
 DELETE | /api/blogs/:blogId               | delete
+GET    | /api/posts                       | get all
 GET    | /api/blogs/:blogId/posts         | get all
 POST   | /api/blogs/:blogId/posts         | create
 GET    | /api/blogs/:blogId/posts/:postId | get by id
@@ -127,6 +128,7 @@ POST   | /api/blogs                       | create
 GET    | /api/blogs/:blogId               | get by id
 PUT    | /api/blogs/:blogId               | update
 DELETE | /api/blogs/:blogId               | delete
+GET    | /api/posts                       | get all
 GET    | /api/blogs/:blogId/posts         | get all
 POST   | /api/blogs/:blogId/posts         | create
 GET    | /api/blogs/:blogId/posts/:postId | get by id

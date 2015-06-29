@@ -5,6 +5,15 @@ find parameters.
 ## query
 The query is build from the `GET` parameters. You can provide a `regex` or a mongo `query operator`.
 
+## recursive end points
+Sub resources recursively adds end points to search. A `child` resource will expose an end point on
+a `parent`, `grandparents` and on the `root` of the api.
+
+End points:
+- `/api/grandparents/:grandparentid/parents/:parentid/childs`
+- `/api/grandparents/:grandparentid/childs` TODO
+- `/api/childs`
+
 ## Examples
 Resource: `/api/grandparents`
 
@@ -47,7 +56,7 @@ Resource: `/api/grandparents`
 ```
 
 ### search by attribute with conditions
-`/api/grandparents?age={"$gt:56"}`
+`/api/grandparents?age={"$gt":56}`
 
 ```json
 [{

@@ -41,6 +41,8 @@ Roadmap
 - [Resource](/docs/api.md)
 - [AuthorizedResource](/docs/authorizedResource.md)
 - [UserResource](/docs/user.md)
+- [Search](/docs/search.md)
+- [Population](/docs/populate.md)
 
 ## Quick Start
 It's easy and fast to use rest.io. To start using rest.io see the next few steps:
