@@ -155,6 +155,17 @@ library
       .set('Authorization', this.authToken);
     done();
   })
+  .when('I am updating user "(.*)" with "(.*)"', (subject: string, role: string, done) => {
+    this.request = supertest('http://localhost:4000')
+      .put(`/api/users/${createIdBasedOnName(subject) }`)
+      .set('Authorization', this.authToken)
+      .send({
+        roles: [role]
+      })
+      .end((req, res) => {
+        done();
+      });
+  })
   .then('I expect to be logged in', (done) => {
     this.request
       .end((req: SuperTest, res: Response) => {
@@ -279,6 +290,25 @@ library
       expect(res.text).to.equal('unauthorized');
       done();
     });
+  })
+  .then('user "(.*)" should have "(.*)" role', (user: string, role: string, done) => {
+    this.request = supertest('http://localhost:4000')
+      .get(`/api/users/${createIdBasedOnName(user) }?populate=roles`)
+      .set('Authorization', this.authToken)
+      .end((req, res) => {
+        if (!!res.body.roles) {
+          var roleFound = false;
+          res.body.roles.forEach((currentRole: any) => {
+            if (currentRole.name === role) {
+              roleFound = true;
+            }
+          });
+          expect(roleFound).to.equal(true);
+        } else if (!!role) {
+          throw new Error('No roles found');
+        }
+        done();
+      });
   });
 
 export = library;

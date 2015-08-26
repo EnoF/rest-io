@@ -42,7 +42,6 @@ Feature: Authorize
       | EnoF      | EnoF      | Andor     | secret      |
       | EnoF      | Banana    | BanHammer | superSecret |
       | Banana    | Banana    | King      | superSecret |
-      | Banana    | Foo       | Banzai    | bar123      |
       | Foo       | Foo       | Baz       | bar123      |
       | Bar       | Bar       | Dude      | foo!@#      |
 
