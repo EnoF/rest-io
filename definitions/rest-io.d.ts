@@ -1,7 +1,7 @@
 declare module 'rest-io' {
-  import {Router, Application, Response, Request} from 'express';
+import {Router, Application, Response, Request} from 'express';
 
-  import {Mongoose, Schema, Model, Document, Types} from 'mongoose';
+import {Mongoose, Schema, Model, Document, Types, Promise} from 'mongoose';
 
   function restIO(app: Application, config?: IRestIOConfig): RestIO;
 
@@ -15,12 +15,11 @@ declare module 'rest-io' {
   }
 
   export interface ResourceModule {
-    authorizedResource: AuthorizedResourceModule;
-    AuthorizedResource: AuthorizedResource;
-    AuthorizedSubResource: AuthorizedSubResource;
     Resource: Resource;
-    SubResource: SubResource;
+    AuthorizedResource: AuthorizedResource;
+    authorizedResource: AuthorizedResourceModule;
     UserResource: UserResource;
+    SubResource: SubResource;
   }
 
   export class Resource {
@@ -37,27 +36,27 @@ declare module 'rest-io' {
     parentRef: string;
     populate: string;
 
-    constructor(resDef: IResource)
+    constructor(resDef: IResource);
 
-    createModel(resDef: IResource)
+    createModel(resDef: IResource): Model<Document>;
 
-    toClassName(name: string)
+    toClassName(name: string): string;
 
-    setupRoutes()
+    setupRoutes(): void;
 
-    getAll(req: Request, res: Response)
+    getAll(req: Request, res: Response): void;
 
-    buildParentSearch(req: Request)
+    buildParentSearch(req: Request): any;
 
-    getById(req: Request, res: Response)
+    getById(req: Request, res: Response): void;
 
-    create(req: Request, res: Response)
+    create(req: Request, res: Response): void;
 
-    update(req: Request, res: Response)
+    update(req: Request, res: Response): void;
 
-    del(req: Request, res: Response)
+    del(req: Request, res: Response): void;
 
-    errorHandler(err: Error, res: Response)
+    errorHandler(err: Error, res: Response): void;
   }
 
   export interface IResource {
@@ -88,17 +87,17 @@ declare module 'rest-io' {
 
     permissions: IMethodAccess;
 
-    isTokenExpired(createdAt: Date)
+    isTokenExpired(createdAt: Date): boolean;
 
-    getRoles(id: string)
+    getRoles(id: string): Promise<Document>;
 
-    hasAuthorizedRole(roles: Array<any>, authorizedRoles: Array<string>)
+    hasAuthorizedRole(roles: Array<any>, authorizedRoles: Array<string>): boolean;
 
-    hasAccessRightsDefined(req: Request, authorizedRoles: Array<string>)
+    hasAccessRightsDefined(req: Request, authorizedRoles: Array<string>): boolean;
 
-    isAuthorized(req: Request, authorizedRoles: Array<string>)
+    isAuthorized(req: Request, authorizedRoles: Array<string>): boolean;
 
-    sendUnauthorized(error: Error, res: Response)
+    sendUnauthorized(error: Error, res: Response): void;
   }
 
   export interface IMethodAccess {
@@ -110,37 +109,25 @@ declare module 'rest-io' {
   }
 
   export class UserResource extends AuthorizedResource {
-    ensureBaseUserModel(model: any)
+    ensureBaseUserModel(model: any): void;
 
-    createRoleModel()
+    createRoleModel(): void;
 
-    isSelf(req: Request)
+    isSelf(req: Request): boolean;
 
-    login(req: Request, res: Response)
+    login(req: Request, res: Response): void;
   }
 
   export class SubResource extends Resource {
-    constructor(subResDef: ISubResource)
+    constructor(resDef: ISubResource);
 
-    createProjectionQuery(req: Request)
+    createProjectionQuery(req: Request): any;
 
-    createPullQuery(req: Request)
+    createPullQuery(req: Request): any;
 
-    createFindQuery(req: Request)
+    createFindQuery(req: Request): any;
 
-    createSubUpdateQuery(req: Request)
-  }
-
-  export class AuthorizedSubResource extends AuthorizedResource {
-    constructor(subResDef: ISubResource)
-
-    createProjectionQuery(req: Request)
-
-    createPullQuery(req: Request)
-
-    createFindQuery(req: Request)
-
-    createSubUpdateQuery(req: Request)
+    createSubUpdateQuery(req: Request): any;
   }
 
   export interface ISubResource {
