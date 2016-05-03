@@ -1,7 +1,9 @@
-import express = require('express');
-import restIO = require('../../src/index');
-import mongoose = require('mongoose');
-var app = express();
+import * as express from 'express';
+import RestIO from '../../src/index';
+import * as mongoose from 'mongoose';
+
+export const app = express();
+
 var port = 4000;
 
 var db = new mongoose.Mongoose();
@@ -11,7 +13,7 @@ var mongoUrl = 'mongodb://' + host + ':' + (process.env.MONGO_PORT || '27017') +
 mongoUrl += (process.env.DB || 'auth');
 db.connect(mongoUrl);
 
-new restIO(app, {
+new RestIO(app, {
   db: db,
   resources: __dirname + '/resources'
 });
@@ -22,5 +24,3 @@ process.env.REST_IO_AES_KEY = process.env.REST_IO_AES_KEY || 'aes key which is s
 app.listen(port, () => {
   console.log('Server has started under port: ' + port);
 });
-
-export = app;

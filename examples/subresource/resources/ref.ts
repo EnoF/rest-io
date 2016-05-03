@@ -1,11 +1,8 @@
-import resource = require('../../../src/resource');
-import Resource = resource.Resource;
+import { Resource } from '../../../src/resource';
 
-var ref = new Resource({
+export const ref = new Resource({
   name: 'ref',
   model: {
     name: String
   }
 });
-
-export = ref;

@@ -1,8 +1,7 @@
-import mongoose = require('mongoose');
-import Schema = mongoose.Schema;
-import UserResource = require('../../../src/userResource');
+import { Schema } from 'mongoose';
+import UserResource from '../../../src/userResource';
 
-var user = new UserResource({
+export const user = new UserResource({
   name: 'user',
   model: {
     userName: String,
@@ -13,5 +12,3 @@ var user = new UserResource({
     }]
   }
 });
-
-export = user;

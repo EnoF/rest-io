@@ -1,9 +1,7 @@
-import mongoose = require('mongoose');
-import Schema = mongoose.Schema;
-import resource = require('../../../src/resource');
-import Resource = resource.Resource;
+import { Schema } from 'mongoose';
+import { Resource } from '../../../src/resource';
 
-var parentResource = new Resource({
+export const parentResource = new Resource({
   name: 'parent',
   model: {
     name: String,
@@ -16,5 +14,3 @@ var parentResource = new Resource({
     }]
   }
 });
-
-export = parentResource;

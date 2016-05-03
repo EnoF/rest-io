@@ -1,8 +1,8 @@
-import {Resource, IResource} from './resource';
-import {Request, Response} from 'express';
-import {Document} from 'mongoose';
+import { Resource, IResource } from './resource';
+import { Request, Response } from 'express';
+import { Document, Model } from 'mongoose';
 
-class SubResource extends Resource {
+export default class SubResource extends Resource {
   constructor(subResDef: ISubResource) {
     var resDef = {
       name: null,
@@ -101,11 +101,9 @@ class SubResource extends Resource {
   }
 }
 
-interface ISubResource {
+export interface ISubResource {
   name: string;
   plural?: string;
   parentResource: Resource;
   populate?: string;
 }
-
-export = SubResource;

@@ -1,10 +1,11 @@
-import {AuthorizedResource, IMethodAccess, ROLES} from './authorizedResource';
-import {Resource, IResource} from './resource';
-import {Request, Router, Application, Response} from 'express';
-import {Model, Schema} from 'mongoose';
-import auth = require('./authentication');
+import AuthorizedResource from './authorizedResource';
+import { IMethodAccess, ROLES } from './authorizedResource';
+import { Resource, IResource } from './resource';
+import { Request, Router, Application, Response } from 'express';
+import { Model, Document, Schema } from 'mongoose';
+import * as auth from './authentication';
 
-class UserResource extends AuthorizedResource {
+export default class UserResource extends AuthorizedResource {
 
   permissions: IMethodAccess = {
     getAll: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
@@ -97,5 +98,3 @@ class UserResource extends AuthorizedResource {
       }, () => this.sendUnauthorized(new Error('cannot perform login'), res));
   }
 }
-
-export = UserResource;

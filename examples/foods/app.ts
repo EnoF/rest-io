@@ -1,9 +1,12 @@
-import express = require('express');
-import restIO = require('../../src/index');
-import mongoose = require('mongoose');
-var app = express();
+import * as express from 'express';
+import RestIO from '../../src/index';
+import * as mongoose from 'mongoose';
+
+export const app = express();
+
 var port = 3000;
-new restIO(app, {
+
+new RestIO(app, {
   resources: __dirname + '/resources'
 });
 
@@ -17,5 +20,3 @@ mongoose.connect(mongoUrl);
 app.listen(port, () => {
   console.log('Server has started under port: ' + port);
 });
-
-export = app;

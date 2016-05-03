@@ -1,9 +1,10 @@
-import {AuthorizedResource} from './authorizedResource';
-import {Resource, IResource} from './resource';
-import {Request, Response} from 'express';
-import SubResource = require('./subResource');
+import AuthorizedResource from './authorizedResource';
+import { Resource, IResource } from './resource';
+import { Request, Response } from 'express';
+import SubResource from './subResource';
+import { Model, Document } from 'mongoose';
 
-class AuthorizedSubResource extends AuthorizedResource {
+export default class AuthorizedSubResource extends AuthorizedResource {
   constructor(subResDef: ISubResource) {
     var resDef = {
       name: null,
@@ -69,11 +70,9 @@ class AuthorizedSubResource extends AuthorizedResource {
   }
 }
 
-interface ISubResource {
+export interface ISubResource {
   name: string;
   plural?: string;
   parentResource: Resource;
   populate?: string;
 }
-
-export = AuthorizedSubResource;

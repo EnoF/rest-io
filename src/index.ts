@@ -1,18 +1,19 @@
-import {Mongoose} from 'mongoose';
-import express = require('express');
-import resource = require('./resource');
-import Resource = resource.Resource;
-import bodyParser = require('body-parser');
-import UserResource = require('./userResource');
-import authorizedResource = require('./authorizedResource');
-import SubResource = require('./subResource');
-import AuthorizedSubResource = require('./authorizedSubResource');
-var autoloader = require('auto-loader');
+import { Mongoose } from 'mongoose';
+import * as express from 'express';
+import * as resource from './resource';
+import { Resource } from './resource';
+import * as bodyParser from 'body-parser';
+import UserResource from './userResource';
+import * as authorizedResource from './authorizedResource';
+import AuthorizedResource from './authorizedResource';
+import SubResource from './subResource';
+import AuthorizedSubResource from './authorizedSubResource';
+const autoloader = require('auto-loader');
 
-class RestIO {
+export default class RestIO {
   static authorizedResource = authorizedResource;
   static UserResource = UserResource;
-  static AuthorizedResource = authorizedResource.AuthorizedResource;
+  static AuthorizedResource = AuthorizedResource;
   static SubResource = SubResource;
   static AuthorizedSubResource = AuthorizedSubResource;
   static Resource = Resource;
@@ -33,9 +34,7 @@ class RestIO {
   }
 }
 
-interface IRestIOConfig {
+export interface IRestIOConfig {
   resources: string;
   db?: Mongoose;
 }
-
-export = RestIO;
