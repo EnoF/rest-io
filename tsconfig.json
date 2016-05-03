@@ -18,7 +18,7 @@
     ],
     "files": [
         "definitions/rest-io.d.ts",
-        "typings/tsd.d.ts",
+        "typings/main.d.ts",
         "examples/authentication/app.ts",
         "examples/authentication/resources/parent.ts",
         "examples/authentication/resources/sub.ts",
