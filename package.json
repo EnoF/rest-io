@@ -36,7 +36,7 @@
     "framework"
   ],
   "author": "Andy Tang <andyt@live.nl>",
-  "contributors":[
+  "contributors": [
     "Dominik Kukacka<dominik.kukacka@gmail.com>",
     "Stefan Schacherl <dabay0r@live.de>"
   ],
@@ -52,10 +52,14 @@
     "mongoose": "^4.0.5"
   },
   "devDependencies": {
+    "auto-loader": "^0.2.0",
+    "body-parser": "^1.15.0",
     "chai": "^2.3.0",
     "chai-things": "^0.2.0",
+    "express": "^4.13.4",
     "mocha": "^2.2.5",
     "mocha-better-spec-reporter": "^2.0.1",
+    "mongoose": "^4.4.14",
     "parallelshell": "^1.1.1",
     "rimraf": "^2.3.4",
     "sinon": "^1.14.1",
