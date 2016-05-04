@@ -16,9 +16,11 @@ services:
 dev:
   steps:
     - npm-install
-    - internal/shell:
+    - internal/watch:
         code: |
-          npm run test-watch
+          npm run ts
+          npm test
+        reload: true
 
 build:
   # The steps that will be executed on build
