@@ -13,7 +13,7 @@ export function createAuthToken(userId: string) {
 
 export function decryptAuthToken(authToken: string) {
   var decryptedMessage = AES.decrypt(authToken, process.env.REST_IO_AES_KEY);
-  const { id, createdAt } = decryptedMessage.toString(enc.Utf8).split(';');
+  const [ id, createdAt ] = decryptedMessage.toString(enc.Utf8).split(';');
   if (!id || !createdAt) {
     throw new Error('corrupt auth token');
   }
@@ -22,4 +22,3 @@ export function decryptAuthToken(authToken: string) {
     createdAt: new Date(parseInt(createdAt, 10))
   };
 }
-

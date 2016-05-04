@@ -16,7 +16,10 @@ services:
 dev:
   steps:
     - npm-install
-    - npm-test
+    - internal/shell:
+        code: |
+          npm run ts
+          npm test
 
 build:
   # The steps that will be executed on build
