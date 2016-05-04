@@ -8,7 +8,7 @@ process.env.DB = 'subTest';
 require('../../examples/subresource/app');
 var library = require('./definitions/sub.steps');
 
-var parentResource = require('../../examples/subresource/resources/parent');
+import { parentResource } from '../../examples/subresource/resources/parent';
 
 new Yadda.FeatureFileSearch('test/subresource').each(function(file) {
   featureFile(file, function(feature) {

@@ -18,8 +18,7 @@ dev:
     - npm-install
     - internal/shell:
         code: |
-          npm run ts
-          npm test
+          npm run test-watch
 
 build:
   # The steps that will be executed on build
