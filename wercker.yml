@@ -13,6 +13,11 @@ box: node
 services:
   - id: mongo
 
+dev:
+  steps:
+    - npm-install
+    - npm-test
+
 build:
   # The steps that will be executed on build
   # Steps make up the actions in your pipeline
