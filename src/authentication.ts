@@ -6,13 +6,13 @@ export function encryptPassword(password: string) {
 }
 
 export function createAuthToken(userId: string) {
-  var authToken = AES.encrypt(userId + ';' +
-    new Date().getTime(), process.env.REST_IO_AES_KEY);
+  const authToken = AES.encrypt(`${userId};${new Date().getTime()}`,
+    process.env.REST_IO_AES_KEY);
   return authToken.toString();
 }
 
 export function decryptAuthToken(authToken: string) {
-  var decryptedMessage = AES.decrypt(authToken, process.env.REST_IO_AES_KEY);
+  const decryptedMessage = AES.decrypt(authToken, process.env.REST_IO_AES_KEY);
   const [ id, createdAt ] = decryptedMessage.toString(enc.Utf8).split(';');
   if (!id || !createdAt) {
     throw new Error('corrupt auth token');

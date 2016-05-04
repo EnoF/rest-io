@@ -31,7 +31,7 @@ export default class UserResource extends AuthorizedResource {
   }
 
   createRoleModel() {
-    var roleSchema = new Schema({
+    const roleSchema = new Schema({
       name: String
     });
     this.db.model('Role', roleSchema);
@@ -45,9 +45,9 @@ export default class UserResource extends AuthorizedResource {
   }
 
   isSelf(req: Request) {
-    var authToken = req.header('Authorization');
-    var tokenDetails = auth.decryptAuthToken(authToken);
-    return tokenDetails.id === req.params.userId;
+    const authToken = req.header('Authorization');
+    const { id } = auth.decryptAuthToken(authToken);
+    return id === req.params.userId;
   }
 
   create(req: Request, res: Response) {
@@ -81,7 +81,7 @@ export default class UserResource extends AuthorizedResource {
   }
 
   login(req: Request, res: Response) {
-    var password = auth.encryptPassword(req.body.password);
+    const password = auth.encryptPassword(req.body.password);
     this.model.findOne({
       userName: new RegExp('^' + req.body.userName + '$', 'i'),
       password: password

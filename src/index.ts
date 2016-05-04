@@ -22,8 +22,8 @@ export default class RestIO {
     app.use(bodyParser.json());
     resource.registerApp(app, config.db);
     if (!!config) {
-      var resources: Object = autoloader.load(config.resources);
-      for (var i in resources) {
+      const resources: Object = autoloader.load(config.resources);
+      for (let i in resources) {
         if (resources.hasOwnProperty(i)) {
           // access to trigger getter of auto-loader
           resources[i];

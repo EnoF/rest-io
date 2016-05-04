@@ -6,11 +6,11 @@ import { Model, Document } from 'mongoose';
 
 export default class AuthorizedSubResource extends AuthorizedResource {
   constructor(subResDef: ISubResource) {
-    var resDef = {
+    const resDef = {
       name: null,
       model: null
     };
-    for (var prop in subResDef) {
+    for (let prop in subResDef) {
       if (subResDef.hasOwnProperty(prop)) {
         resDef[prop] = subResDef[prop];
       }

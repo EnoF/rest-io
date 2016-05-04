@@ -8,8 +8,8 @@ const { ObjectId } = Types;
 import * as pluralize from 'pluralize';
 
 // The app reference it used to register params.
-var app;
-var db: Mongoose;
+let app;
+let db: Mongoose;
 
 export class Resource {
   static BASE_URL = '/api';
@@ -42,7 +42,7 @@ export class Resource {
   }
 
   createModel(resDef: IResource) {
-    var schema = new Schema(resDef.model);
+    const schema = new Schema(resDef.model);
     return this.db.model(this.toClassName(resDef.name), schema);
   }
 
@@ -76,7 +76,7 @@ export class Resource {
   }
 
   setupRecursiveRoutes() {
-    var resource: Resource = this.parentResource;
+    let resource: Resource = this.parentResource;
     if (!!resource) {
       // Ensure the getter on root level
       this.router.route(`${Resource.BASE_URL}/${this.resDef.plural}`)
@@ -92,8 +92,8 @@ export class Resource {
 
   getAll(req: Request, res: Response) {
     try {
-      var query: Object = this.buildSearchQuery(req);
-      var getQuery = this.model.find(query);
+      const query: Object = this.buildSearchQuery(req);
+      const getQuery = this.model.find(query);
       getQuery
         .populate(this.buildPopulateQuery(req))
         .exec()
@@ -113,8 +113,8 @@ export class Resource {
   }
 
   buildSearchQuery(req: Request) {
-    var query = {};
-    for (var attr in req.query) {
+    const query = {};
+    for (let attr in req.query) {
       // ignore populate attribute
       if (req.query.hasOwnProperty(attr) && attr !== 'populate') {
         query[attr] = this.createQuery(req.query[attr]);
@@ -136,16 +136,16 @@ export class Resource {
     if (!query.match(/\//)) {
       query = `/${query}/`;
     }
-    var splitQuery = query.split('/');
-    var modifier = splitQuery.pop();
+    const splitQuery = query.split('/');
+    const modifier = splitQuery.pop();
     splitQuery.shift();
     return new RegExp(splitQuery.join('/'), modifier);
   }
 
   buildParentSearch(req: Request, query) {
-    var resource: Resource = this;
+    let resource: Resource = this;
     while (!!resource.parentRef) {
-      var id = req.params[resource.parentResource.paramId];
+      const id = req.params[resource.parentResource.paramId];
       if (!!id) {
         query[resource.parentRef] = new ObjectId(id);
       } else {
@@ -157,7 +157,7 @@ export class Resource {
   }
 
   getById(req: Request, res: Response) {
-    var id = req.params[this.paramId];
+    const id = req.params[this.paramId];
     this.model.findById(id)
       .populate(this.buildPopulateQuery(req))
       .exec()
@@ -172,7 +172,7 @@ export class Resource {
   }
 
   update(req: Request, res: Response) {
-    var id = req.params[this.paramId];
+    const id = req.params[this.paramId];
     this.model.findByIdAndUpdate(id, req.body)
       .exec()
       .then((model: Document) => res.send(model),
@@ -180,7 +180,7 @@ export class Resource {
   }
 
   del(req: Request, res: Response) {
-    var id = req.params[this.paramId];
+    const id = req.params[this.paramId];
     this.model.findByIdAndRemove(id, req.body)
       .exec()
       .then((model: Document) => res.send(model),

@@ -24,7 +24,7 @@ export default class AuthorizedResource extends Resource {
   };
 
   isTokenExpired(createdAt: Date) {
-    var maxTokenLifeTime = new Date();
+    const maxTokenLifeTime = new Date();
     maxTokenLifeTime.setDate(maxTokenLifeTime.getDate() - this.maxDays);
     return createdAt < maxTokenLifeTime;
   }
@@ -37,10 +37,10 @@ export default class AuthorizedResource extends Resource {
   }
 
   hasAuthorizedRole(roles: Array<any>, authorizedRoles: Array<string>) {
-    var hasRole = false;
-    roles.forEach((role) => {
+    let hasRole = false;
+    roles.forEach(({ name }) => {
       authorizedRoles.forEach((authRole: string) => {
-        if (role.name === authRole) {
+        if (name === authRole) {
           hasRole = true;
         }
       });
@@ -49,8 +49,8 @@ export default class AuthorizedResource extends Resource {
   }
 
   hasAccessRightsDefined(req: Request, authorizedRoles: Array<string>) {
-    var promise = new mongoose.Promise();
-    var authToken = req.header('Authorization');
+    const promise = new mongoose.Promise();
+    const authToken = req.header('Authorization');
     if (authorizedRoles.length === 0) {
       promise.resolve(null, null);
       return promise;
@@ -58,8 +58,8 @@ export default class AuthorizedResource extends Resource {
   }
 
   isAuthorized(req: Request, authorizedRoles: Array<string>) {
-    var promise = new mongoose.Promise();
-    var authToken = req.header('Authorization');
+    const promise = new mongoose.Promise();
+    const authToken = req.header('Authorization');
     if (authorizedRoles.length === 0) {
       promise.resolve(null, null);
       return promise;
@@ -67,13 +67,13 @@ export default class AuthorizedResource extends Resource {
       promise.resolve(new Error('no token found'), null);
       return promise;
     }
-    var tokenDetails = auth.decryptAuthToken(authToken);
-    return this.getRoles(tokenDetails.id)
-      .then((user: any) => {
-        if (this.isTokenExpired(tokenDetails.createdAt)) {
+    const { id, createdAt } = auth.decryptAuthToken(authToken);
+    return this.getRoles(id)
+      .then(({ roles }: any) => {
+        if (this.isTokenExpired(createdAt)) {
           throw new Error('token expired');
         }
-        return user.roles;
+        return roles;
       })
       .then((roles: Array<any>) => {
         if (!this.hasAuthorizedRole(roles, authorizedRoles)) {
