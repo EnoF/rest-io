@@ -10,6 +10,7 @@ $ npm install rest-io --save
 ## New in v4.1.0
 - Updated to Typescript 1.8
 - Updated to Typings from TSD
+- Typescript definitions are now automatically loaded
 
 ## Features
 - Custom Resource declarations

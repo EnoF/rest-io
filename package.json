@@ -54,15 +54,13 @@
     "mocha": "^2.2.5",
     "mocha-better-spec-reporter": "^2.0.1",
     "mongoose": "^4.4.14",
-    "parallelshell": "^1.1.1",
     "rimraf": "^2.3.4",
-    "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0",
-    "supertest": "^1.0.1",
+    "sinon": "^1.17.4",
+    "sinon-chai": "^2.8.0",
+    "supertest": "^1.2.0",
     "ts-node": "^0.7.2",
     "typescript": "^1.8.10",
-    "watch": "^0.16.0",
-    "yadda": "^0.11.5"
+    "yadda": "^0.11.7"
   },
   "dependencies": {
     "crypto-js": "^3.1.5",
