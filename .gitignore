@@ -1,3 +1,7 @@
+_cache/
+_projects/
+_builds/
+_steps/
 build
 node_modules
 npm-debug.log

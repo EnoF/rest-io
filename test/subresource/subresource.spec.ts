@@ -1,27 +1,24 @@
-var Yadda = require('yadda');
+const Yadda = require('yadda');
 Yadda.plugins.mocha.ScenarioLevelPlugin.init();
 
-var mongoose = require('mongoose');
+import * as mongoose from 'mongoose';
 
 process.env.DB = 'subTest';
 
 require('../../examples/subresource/app');
-var library = require('./definitions/sub.steps');
+const library = require('./definitions/sub.steps');
 
-var parentResource = require('../../examples/subresource/resources/parent');
+import { parentResource } from '../../examples/subresource/resources/parent';
 
-new Yadda.FeatureFileSearch('test/subresource').each(function(file) {
-  featureFile(file, function(feature) {
-    var yadda = Yadda.createInstance(library);
+new Yadda.FeatureFileSearch('test/subresource').each((file) => {
+  featureFile(file, (feature) => {
+    const yadda = Yadda.createInstance(library);
 
-    afterEach((done) => {
-      parentResource.db.connection.db.dropDatabase(function(err, result) {
-        done();
-      });
-    });
+    afterEach((done) =>
+      parentResource.db.connection.db
+        .dropDatabase((err, result) => done()));
 
-    scenarios(feature.scenarios, function(scenario, done) {
-      yadda.run(scenario.steps, done);
-    });
+    scenarios(feature.scenarios, (scenario, done) => 
+      yadda.run(scenario.steps, done));
   });
 });

@@ -1,10 +1,8 @@
-import SubResource = require('../../../src/subResource');
-import parent = require('./parent');
+import SubResource from '../../../src/subResource';
+import { parentResource } from './parent';
 
-var sub = new SubResource({
+export const sub = new SubResource({
   name: 'sub',
-  parentResource: parent,
+  parentResource,
   populate: 'subs.ref'
 });
-
-module.exports = sub;

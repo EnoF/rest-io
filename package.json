@@ -1,13 +1,10 @@
 {
   "name": "rest-io",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "REST resource generator",
   "main": "lib/src/index.js",
-  "typescript": {
-    "definitions": "./definitions/rest-io.d.ts"
-  },
+  "typings": "lib/src/index.d.ts",
   "files": [
-    "definitions/",
     "lib/src"
   ],
   "directories": {
@@ -17,11 +14,8 @@
   },
   "scripts": {
     "clean": "rimraf lib dist build",
-    "ts": "tsc --module commonjs -t ES5 --out typings/rest-io/rest-io.ts --p . --declaration",
-    "ts-watch": "tsc --module commonjs -t ES5 --outDir lib -p . -w",
-    "test": "mocha lib/test/**/*.spec.js -R mocha-better-spec-reporter",
-    "test-watch": "watch \"npm run test\" lib/",
-    "watch": "parallelshell \"npm run ts-watch\" \"npm run test-watch\""
+    "ts": "tsc --module commonjs -t ES5 --outDir lib -d",
+    "test": "mocha --require ts-node/register test/**/*.spec.ts -R mocha-better-spec-reporter"
   },
   "repository": {
     "type": "git",
@@ -36,7 +30,7 @@
     "framework"
   ],
   "author": "Andy Tang <andyt@live.nl>",
-  "contributors":[
+  "contributors": [
     "Dominik Kukacka<dominik.kukacka@gmail.com>",
     "Stefan Schacherl <dabay0r@live.de>"
   ],
@@ -52,18 +46,21 @@
     "mongoose": "^4.0.5"
   },
   "devDependencies": {
+    "auto-loader": "^0.2.0",
+    "body-parser": "^1.15.0",
     "chai": "^2.3.0",
     "chai-things": "^0.2.0",
+    "express": "^4.13.4",
     "mocha": "^2.2.5",
     "mocha-better-spec-reporter": "^2.0.1",
-    "parallelshell": "^1.1.1",
+    "mongoose": "^4.4.14",
     "rimraf": "^2.3.4",
-    "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0",
-    "supertest": "^1.0.1",
-    "typescript": "^1.5.0-beta",
-    "watch": "^0.16.0",
-    "yadda": "^0.11.5"
+    "sinon": "^1.17.4",
+    "sinon-chai": "^2.8.0",
+    "supertest": "^1.2.0",
+    "ts-node": "^0.7.2",
+    "typescript": "^1.8.10",
+    "yadda": "^0.11.7"
   },
   "dependencies": {
     "crypto-js": "^3.1.5",

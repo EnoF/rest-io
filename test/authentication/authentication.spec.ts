@@ -7,7 +7,7 @@ process.env.DB = 'authTest';
 
 require('../../examples/authentication/app');
 var library = require('./definitions/authentication.steps');
-import user = require('../../examples/authentication/resources/user');
+import { user } from '../../examples/authentication/resources/user';
 
 new Yadda.FeatureFileSearch('test/authentication').each(function(file) {
   featureFile(file, function(feature) {

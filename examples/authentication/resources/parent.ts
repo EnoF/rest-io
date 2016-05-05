@@ -1,6 +1,6 @@
-import {AuthorizedResource} from '../../../src/authorizedResource';
+import AuthorizedResource from '../../../src/authorizedResource';
 
-var parentResource = new AuthorizedResource({
+export const parentResource = new AuthorizedResource({
   name: 'parent',
   model: {
     name: String,
@@ -9,5 +9,3 @@ var parentResource = new AuthorizedResource({
     }]
   }
 });
-
-export = parentResource;

@@ -9,9 +9,10 @@ import ObjectId = mongoose.Types.ObjectId;
 
 import auth = require('../../../src/authentication');
 
-import supertest = require('supertest');
+import { SuperTest, Response } from 'supertest';
+const supertest = require('supertest');
 
-import user = require('../../../examples/authentication/resources/user');
+import { user } from '../../../examples/authentication/resources/user';
 
 function createIdBasedOnName(name: string) {
   var id = convertToHex(name);
@@ -156,7 +157,7 @@ library
   })
   .then('I expect to be logged in', (done) => {
     this.request
-      .end((req: supertest.SuperTest, res: supertest.Response) => {
+      .end((req: SuperTest, res: Response) => {
         expect(res.status).to.equal(200);
         expect(res.body.authToken).to.not.be.empty;
         done();
@@ -164,7 +165,7 @@ library
   })
   .then('I expect to be unauthorized', (done) => {
     this.request
-      .end((req: supertest.SuperTest, res: supertest.Response) => {
+      .end((req: SuperTest, res: Response) => {
         expect(res.status).to.equal(401);
         expect(res.text).to.equal('unauthorized');
         done();
@@ -172,7 +173,7 @@ library
   })
   .then('I can see the user details', (done) => {
     this.request
-      .end((req: supertest.SuperTest, res: supertest.Response) => {
+      .end((req: SuperTest, res: Response) => {
         expect(res.status).to.equal(200);
         expect(res.body).to.be.ok;
         done();
@@ -180,7 +181,7 @@ library
   })
   .then('I can not see the user details', (done) => {
     this.request
-      .end((req: supertest.SuperTest, res: supertest.Response) => {
+      .end((req: SuperTest, res: Response) => {
         expect(res.status).to.equal(401);
         expect(res.text).to.equal('unauthorized');
         done();
@@ -188,7 +189,7 @@ library
   })
   .then('the new user is created', (done) => {
     this.request
-      .end((req: supertest.SuperTest, res: supertest.Response) => {
+      .end((req: SuperTest, res: Response) => {
         expect(res.status).to.equal(200);
         expect(res.body._id).to.be.ok;
         done();

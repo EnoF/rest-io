@@ -3,12 +3,10 @@ import Schema = mongoose.Schema;
 import resource = require('../../../src/resource');
 import Resource = resource.Resource;
 
-var foodResource = new Resource({
+export const food = new Resource({
   name: 'food',
   model: {
     name: String,
     weight: Number
   }
 });
-
-export = foodResource;

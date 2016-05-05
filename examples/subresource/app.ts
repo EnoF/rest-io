@@ -1,23 +1,22 @@
-import express = require('express');
-import restIO = require('../../src/index');
-import mongoose = require('mongoose');
-var app = express();
-var port = 5050;
+import * as express from 'express';
+import RestIO from '../../src/index';
+import * as mongoose from 'mongoose';
 
-var host = process.env.MONGO_PORT_27017_TCP_ADDR || 'localhost';
-var mongoUrl = 'mongodb://' + host + ':' + (process.env.MONGO_PORT || '27017') + '/';
+export const app = express();
+const port = 5050;
 
-var db = new mongoose.Mongoose();
+const host = process.env.MONGO_PORT_27017_TCP_ADDR || 'localhost';
+let mongoUrl = `mongodb://${host}:${process.env.MONGO_PORT || '27017'}/`;
+
+const db = new mongoose.Mongoose();
 mongoUrl += (process.env.DB || 'sub');
 db.connect(mongoUrl);
 
-new restIO(app, {
+new RestIO(app, {
   db: db,
-  resources: __dirname + '/resources'
+  resources: `${__dirname}/resources`
 });
 
 app.listen(port, () => {
-  console.log('Server has started under port: ' + port);
+  console.log(`Server has started under port: ${port}`);
 });
-
-export = app;

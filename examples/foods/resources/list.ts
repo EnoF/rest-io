@@ -3,7 +3,7 @@ import Schema = mongoose.Schema;
 import resource = require('../../../src/resource');
 import Resource = resource.Resource;
 
-var listResource = new Resource({
+export const list = new Resource({
   name: 'list',
   populate: 'foods',
   model: {
@@ -14,5 +14,3 @@ var listResource = new Resource({
     }]
   }
 });
-
-export = listResource;

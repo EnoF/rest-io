@@ -4,11 +4,11 @@ import chai = require('chai');
 chai.use(require('chai-things'));
 var expect = chai.expect;
 
-import food = require('../../../examples/foods/resources/food');
+import { food } from '../../../examples/foods/resources/food';
 var Food = food.model;
-import list = require('../../../examples/foods/resources/list');
+import { list } from '../../../examples/foods/resources/list';
 var List = list.model;
-import dish = require('../../../examples/foods/resources/dish');
+import { dish } from '../../../examples/foods/resources/dish';
 var Dish = dish.model;
 import supertest = require('supertest');
 

@@ -1,12 +1,8 @@
-import mongoose = require('mongoose');
-import Schema = mongoose.Schema;
-import BoomerangResource = require('../resourceDefinitions/boomerangResource');
+import BoomerangResource from '../resourceDefinitions/boomerangResource';
 
-var boomerang = new BoomerangResource({
+export const boomerang = new BoomerangResource({
   name: 'boomerang',
   model: {
     name: String
   }
 });
-
-module.exports = boomerang;

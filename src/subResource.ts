@@ -1,14 +1,14 @@
-import {Resource, IResource} from './resource';
-import {Request, Response} from 'express';
-import {Document} from 'mongoose';
+import { Resource, IResource } from './resource';
+import { Request, Response } from 'express';
+import { Document, Model } from 'mongoose';
 
-class SubResource extends Resource {
+export default class SubResource extends Resource {
   constructor(subResDef: ISubResource) {
-    var resDef = {
+    const resDef = {
       name: null,
       model: null
     };
-    for (var prop in subResDef) {
+    for (let prop in subResDef) {
       if (subResDef.hasOwnProperty(prop)) {
         resDef[prop] = subResDef[prop];
       }
@@ -39,7 +39,7 @@ class SubResource extends Resource {
   }
 
   createProjectionQuery(req: Request) {
-    var projection = {};
+    const projection = {};
     projection[this.resDef.plural] = {
       $elemMatch: {
         _id: req.params[this.paramId]
@@ -49,7 +49,7 @@ class SubResource extends Resource {
   }
 
   create(req: Request, res: Response) {
-    var pushQuery = {};
+    const pushQuery = {};
     pushQuery[this.resDef.plural] = req.body;
     this.model.findByIdAndUpdate(req.params[this.parentResource.paramId], {
       $push: pushQuery
@@ -67,7 +67,7 @@ class SubResource extends Resource {
   }
 
   createPullQuery(req: Request) {
-    var pullQuery = {};
+    const pullQuery = {};
     pullQuery[this.resDef.plural] = {
       _id: req.params[this.paramId]
     };
@@ -83,7 +83,7 @@ class SubResource extends Resource {
   }
 
   createFindQuery(req: Request) {
-    var findQuery = {
+    const findQuery = {
       _id: req.params[this.parentResource.paramId]
     };
     findQuery[`${this.resDef.plural}._id`] = req.params[this.paramId];
@@ -91,8 +91,8 @@ class SubResource extends Resource {
   }
 
   createSubUpdateQuery(req: Request) {
-    var setQuery = {};
-    for (var prop in req.body) {
+    const setQuery = {};
+    for (let prop in req.body) {
       if (req.body.hasOwnProperty(prop)) {
         setQuery[`${this.resDef.plural}.$.${prop}`] = req.body[prop];
       }
@@ -101,11 +101,9 @@ class SubResource extends Resource {
   }
 }
 
-interface ISubResource {
+export interface ISubResource {
   name: string;
   plural?: string;
   parentResource: Resource;
   populate?: string;
 }
-
-export = SubResource;

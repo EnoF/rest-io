@@ -1,13 +1,8 @@
-import resource = require('../../../src/resource');
-import Resource = resource.Resource;
+import { Resource } from '../../../src/resource';
 
-import express = require('express');
-import Request = express.Request;
-import Router = express.Router;
-import Application = express.Application;
-import Response = express.Response;
+import { Request, Router, Application, Response } from 'express';
 
-class BoomerangResource extends Resource {
+export default class BoomerangResource extends Resource {
   setupRoutes() {
     super.setupRoutes();
     this.router
@@ -34,5 +29,3 @@ class BoomerangResource extends Resource {
       });
   }
 }
-
-export = BoomerangResource;

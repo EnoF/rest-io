@@ -7,9 +7,10 @@ Small extendable REST framework for express and mongoose. [![wercker status](htt
 $ npm install rest-io --save
 ```
 
-## New in v4.0.0
-- all resources are [searchable](/docs/search.md)
-- all resources have [population](/docs/populate.md) controllable
+## New in v4.1.0
+- Updated to Typescript 1.8
+- Updated to Typings from TSD
+- Typescript definitions are now automatically loaded
 
 ## Features
 - Custom Resource declarations
@@ -24,6 +25,8 @@ $ npm install rest-io --save
 - Typescript definitions
 - Sub Documents can be populated
 - pluralize used for automatic pluralizing
+- all resources are [searchable](/docs/search.md)
+- all resources have [population](/docs/populate.md) controllable
 
 Roadmap
 - More default operations:

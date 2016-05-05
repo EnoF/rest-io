@@ -1,9 +1,7 @@
-import AuthorizedSubResource = require('../../../src/authorizedSubResource');
-import parent = require('./parent');
+import AuthorizedSubResource from '../../../src/authorizedSubResource';
+import { parentResource } from './parent';
 
-var sub = new AuthorizedSubResource({
+export const sub = new AuthorizedSubResource({
   name: 'sub',
-  parentResource: parent
+  parentResource: parentResource
 });
-
-module.exports = sub;

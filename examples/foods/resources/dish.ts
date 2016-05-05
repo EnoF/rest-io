@@ -1,10 +1,8 @@
-import mongoose = require('mongoose');
-import Schema = mongoose.Schema;
-import resource = require('../../../src/resource');
-import Resource = resource.Resource;
-import Food = require('./food');
+import { Schema } from 'mongoose';
+import { Resource } from '../../../src/resource';
+import { food } from './food';
 
-var dish = new Resource({
+export const dish = new Resource({
   name: 'dish',
   model: {
     name: String,
@@ -13,8 +11,6 @@ var dish = new Resource({
       ref: 'Food'
     }
   },
-  parentResource: Food,
+  parentResource: food,
   parentRef: 'mainIngredient'
 });
-
-export = dish;
