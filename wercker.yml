@@ -28,9 +28,12 @@ build:
   # Read more about steps on our dev center:
   # http://devcenter.wercker.com/docs/steps/index.html
   steps:
-    # A step that executes `npm install` command
     - npm-install
-    # A step that executes `npm test` command
+    - script:
+        name: build the package
+        code: |
+            npm run clean
+            npm run ts
     - npm-test
 
     # A custom script step, name value is used in the UI
