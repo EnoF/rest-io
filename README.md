@@ -7,7 +7,8 @@ Small extendable REST framework for express and mongoose. [![wercker status](htt
 $ npm install rest-io --save
 ```
 
-## New in v4.1.0
+## New in v4.2.0
+- Updated documentation to ES6 style
 - Updated to Typescript 1.8
 - Updated to Typings from TSD
 - Typescript definitions are now automatically loaded
