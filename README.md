@@ -53,27 +53,26 @@ $ npm i rest-io -S
 Create a resource:
 
 ```
-var resource = require('rest-io');
-var Resource = resource.Resource;
-var foodResource = new Resource({
+import { Resource } from 'rest-io';
+export const foodResource = new Resource({
     name: 'food',
     model: {
         name: String
     }
 });
-module.exports = foodResource;
 ```
 
 Create an app:
 
 ```
-var express = require('express');
-var restIO = require('rest-io');
-var mongoose = require('mongoose');
-var app = express();
+const * as express from 'express';
+const RestIO from 'rest-io';
+const * as mongoose from 'mongoose';
+
+export const app = express();
 
 // register the express app with rest.io
-restIO(app, {
+new RestIO(app, {
   resources: __dirname + '/resources'
 });
 
@@ -81,7 +80,6 @@ mongoose.connect('mongodb://localhost:27017/test');
 app.listen(3000, function () {
     console.log('Server has started under port: 3000');
 });
-module.exports = app;
 ```
 
 Start the server:
@@ -100,10 +98,10 @@ GET    | /api/foods/:foodId | get by id
 PUT    | /api/foods/:foodId | update
 DELETE | /api/foods/:foodId | delete
 
-## [restIO(app)](docs/api.md)
+## [new RestIO(app)](docs/api.md)
 Registers the app with `rest-io`. This allows `rest-io` to bind the routings automatically. The `bodyParser` module will be used to parse the `json` requests.
 
-## [new restIO.Resource(config)](docs/resource.md)
+## [new RestIO.Resource(config)](docs/resource.md)
 Resources are routed automatically with the configuration provided. These configurations are provided to the `Resource` constructor.
 
 Property       | Description                                                           | Type     | Default
