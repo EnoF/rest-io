@@ -1,7 +1,7 @@
 # API
 API documentation for `rest-io`.
 
-## restIO(app[, config])
+## new RestIO(app[, config])
 Registers the app with `rest-io`. This allows `rest-io` to bind the routings automatically. The `bodyParser` module will be used to parse the `json` requests.
 
 Property  | Description                   | Type     | Default
