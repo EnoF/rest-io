@@ -5,32 +5,29 @@
 To create an Authorized Resource:
 
 ```javascript
-var restIO = require('rest-io');
-var authorizedResource = restIO.authorizedResource;
-var AuthorizedResource = restIO.AuthorizedResource;
-var ROLES = authorizedResource.ROLES;
+import { AuthorizedResource, ROLES } from 'rest-io';
 
-function BananaResource() { }
-
-BananaResource.prototype = Object.create(AuthorizedResource.prototype, {
+export default class BananaResource extends AuthorizedResource {
   ...
-});
+}
 ```
 
 Now you can overwrite the standard calls and authorizations:
 
 ```javascript
-BananaResource.prototype = Object.create(Resource.prototype, {
-  permissions = {
-    getAll: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
-    getById: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
-    create: [ROLES.MODERATOR, ROLES.ADMIN],
-    update: [ROLES.MODERATOR, ROLES.ADMIN],
-    del: [ROLES.ADMIN]
-  };
+export default class BananaResource extends AuthorizedResource {
+  constructor() {
+    this.permissions = {
+      getAll: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
+      getById: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
+      create: [ROLES.MODERATOR, ROLES.ADMIN],
+      update: [ROLES.MODERATOR, ROLES.ADMIN],
+      del: [ROLES.ADMIN]
+    };
+  }
 });
 
-var banana = new BananaResource({
+const banana = new BananaResource({
   name: 'banana',
   model: {
     name: String

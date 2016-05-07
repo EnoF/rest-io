@@ -5,10 +5,9 @@
 To create an Authorized Parent Resource:
 
 ```javascript
-var restIO = require('rest-io');
-var AuthorizedResource = restIO.AuthorizedResource;
+import { AuthorizedResource } from 'rest-io';
 
-var blog = new AuthorizedResource({
+export const blog = new AuthorizedResource({
   name: 'blog',
   model: {
     title: String,
@@ -22,11 +21,10 @@ var blog = new AuthorizedResource({
 To create a sub resource for the posts:
 
 ```javascript
-var restIO = require('rest-io');
-var AuthorizedSubResource = restIO.AuthorizedSubResource;
-var blog = require('./blog');
+import { AuthorizedSubResource } from 'rest-io';
+import blog from './blog';
 
-var posts = new AuthorizedSubResource({
+export const posts = new AuthorizedSubResource({
   name: 'post',
   parentResource: blog
 });

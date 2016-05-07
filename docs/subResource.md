@@ -42,10 +42,9 @@ With the following two files, the blog and post resource will be available:
 **blog resource**
 
 ```javascript
-var restIO = require('rest-io');
-var Resource = restIO.Resource;
+import { Resource } from 'rest-io';
 
-var blog = new Resource({
+export const blog = new Resource({
   name: 'blog',
   model: {
     title: String,
@@ -54,23 +53,18 @@ var blog = new Resource({
     }]
   }
 });
-
-module.exports = blog;
 ```
 
 **post resource**
 
 ```javascript
-var restIO = require('rest-io');
-var SubResource = restIO.SubResource;
-var blog = require('./blog');
+import { SubResource } from 'rest-io';
+import blog from './blog';
 
-var post = new SubResource({
+export const post = new SubResource({
   name: 'post',
   parentResource: blog
 });
-
-module.exports = post;
 ```
 
 Now the following urls are available:
@@ -94,28 +88,24 @@ With the following two files, the blog and post resource will be available:
 **blog resource**
 
 ```javascript
-var restIO = require('rest-io');
-var Resource = restIO.Resource;
+import { Resource } from 'rest-io';
 
-var blog = new Resource({
+const export blog = new Resource({
   name: 'blog',
   model: {
     title: String
   }
 });
-
-module.exports = blog;
 ```
 
 **post resource**
 
 ```javascript
-var restIO = require('rest-io');
-var Resource = restIO.Resource;
-var blog = require('./blog');
-var Schema = require('mongoose').Schema;
+import { Resource } from 'rest-io';
+import blog from './blog';
+import { Schema } from 'mongoose';
 
-var post = new SubResource({
+export const post = new SubResource({
   name: 'post',
   model: {
     message: String,
@@ -126,8 +116,6 @@ var post = new SubResource({
   },
   parentResource: blog
 });
-
-module.exports = post;
 ```
 
 Now the following urls are available:

@@ -17,7 +17,6 @@
         "test/**/*.ts"
     ],
     "files": [
-        "definitions/rest-io.d.ts",
         "typings/main.d.ts",
         "typings/yadda.d.ts",
         "examples/authentication/app.ts",

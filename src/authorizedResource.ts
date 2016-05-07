@@ -14,6 +14,7 @@ export const ROLES = {
 export default class AuthorizedResource extends Resource {
   methodAccess: IMethodAccess;
   maxDays: number = 7;
+  static ROLES = ROLES;
 
   permissions: IMethodAccess = {
     getAll: [ROLES.USER, ROLES.SUPER_USER, ROLES.MODERATOR, ROLES.ADMIN],
