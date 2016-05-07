@@ -5,11 +5,10 @@
 To create a user resource:
 
 ```javascript
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var restIO = require('rest-io');
-var UserResource = restIO.UserResource;
-var user = new UserResource({
+import { Schema } from 'mongoose';
+import { UserResource } from 'rest-io';
+
+export const user = new UserResource({
   name: 'user',
   model: {
     userName: String,
