@@ -2,6 +2,7 @@
 
 const rio = require('commander');
 const package = require('../package.json');
+const fs = require('fs');
 const version = package.version;
 
 console.log(`
@@ -13,20 +14,38 @@ console.log(`
 rio.version(version);
 
 rio.option('-s, --src [value]', 'specify the target directory', src =>
-    `${__dirname}/${src}`)
+    src)
   .option('-o, --out [value]', 'specify the output directory', out =>
-    `${__dirname}/${out}`);
+    out);
 
 rio.command('gen-docs')
   .description('generate swagger docs from the rest-io resource models')
   .action((options) => {
-    console.log('Swagger documentation - generation');
-    console.log(`--- generating ---
-    from: ${rio.src}
-    to: ${rio.out}`);
-    console.log('--- generating ---');
+    notifyGenerationParams();
+    console.log('--- Resources ---');
+    displayResources(rio.src);
+    console.log('--- Resources ---');
   });
 
 rio.parse(process.argv);
 
 if (!rio.src || !rio.out) rio.help();
+
+function notifyGenerationParams() {
+  console.log('Swagger documentation - generation');
+  console.log(`--- generating ---
+    from: ${rio.src}
+    to: ${rio.out}`);
+  console.log('--- generating ---');
+}
+
+function displayResources(dir) {
+  const content = fs.readdirSync(dir);
+  content
+    .filter(name => fs.statSync(`${dir}/${name}`).isDirectory())
+    .forEach(name => displayResources(`${dir}/${name}`));
+
+  content
+    .filter(name => fs.statSync(`${dir}/${name}`).isFile())
+    .forEach(name => console.log(`${dir}/${name}`));
+}
