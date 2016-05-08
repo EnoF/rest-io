@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+var rio = require('commander');
+var package = require('../package.json');
+var version = package.version;
+
+function generateSwaggerDocumentation(dir) {
+  decorateMessage('Starting swagger documentation generation for:', dir);
+}
+
+function decorateMessage(message, parameter) {
+  console.log('------------------------------------------------------------');
+  console.log(message, parameter || '');
+  console.log('------------------------------------------------------------');
+}
+
+rio.version(version);
+
+rio.option('-g, --generate <dir>', 'generate swagger documentation',
+  generateSwaggerDocumentation);
+
+rio.parse(process.argv);
