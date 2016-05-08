@@ -12,6 +12,7 @@
     "example": "lib/examples",
     "doc": "docs"
   },
+  "bin": "bin/rio",
   "scripts": {
     "clean": "rimraf lib dist build",
     "ts": "tsc --module commonjs -t ES5 --outDir lib -d",
