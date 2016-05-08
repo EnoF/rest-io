@@ -59,7 +59,7 @@ $ npm i rest-io -S
 
 Create a resource:
 
-```
+```javascript
 import { Resource } from 'rest-io';
 export const foodResource = new Resource({
     name: 'food',
@@ -71,10 +71,10 @@ export const foodResource = new Resource({
 
 Create an app:
 
-```
+```javascript
 const * as express from 'express';
 const RestIO from 'rest-io';
-const * as mongoose from 'mongoose';
+const * as mongoose from 'mongoose'
 
 export const app = express();
 
