@@ -4,6 +4,12 @@ const rio = require('commander');
 const package = require('../package.json');
 const version = package.version;
 
+console.log(`
+  ______ _______ _______ _______     _____  _____
+ |_____/ |______ |______    |    ___   |   |     |
+ |    \\_ |______ ______|    |        __|__ |_____|
+`);
+
 rio.version(version);
 
 rio.option('-s, --src [value]', 'specify the target directory', src =>
@@ -11,18 +17,16 @@ rio.option('-s, --src [value]', 'specify the target directory', src =>
   .option('-o, --out [value]', 'specify the output directory', out =>
     `${__dirname}/${out}`);
 
+rio.command('gen-docs')
+  .description('generate swagger docs from the rest-io resource models')
+  .action((options) => {
+    console.log('Swagger documentation - generation');
+    console.log(`--- generating ---
+    from: ${rio.src}
+    to: ${rio.out}`);
+    console.log('--- generating ---');
+  });
+
 rio.parse(process.argv);
 
 if (!rio.src || !rio.out) rio.help();
-
-// Generate the actual documentation
-console.log(`
-  ______ _______ _______ _______     _____  _____
- |_____/ |______ |______    |    ___   |   |     |
- |    \\_ |______ ______|    |        __|__ |_____|
-`);
-console.log('Swagger documentation - generation');
-console.log(`--- generating ---
-  from: ${rio.src}
-  to: ${rio.out}
---- generating ---`);
