@@ -1,6 +1,6 @@
 {
   "name": "rest-io",
-  "version": "4.2.0",
+  "version": "5.0.0",
   "description": "REST resource generator",
   "main": "lib/src/index.js",
   "typings": "lib/src/index.d.ts",
