@@ -12,6 +12,12 @@ export default class RestIO {
     static SubResource: typeof SubResource;
     static AuthorizedSubResource: typeof AuthorizedSubResource;
     static Resource: typeof resource.Resource;
+    static ROLES: {
+        USER: string;
+        SUPER_USER: string;
+        MODERATOR: string;
+        ADMIN: string;
+    };
     constructor(app: express.Application, config?: IRestIOConfig);
 }
 export interface IRestIOConfig {

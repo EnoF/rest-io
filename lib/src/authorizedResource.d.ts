@@ -10,6 +10,12 @@ export declare const ROLES: {
 export default class AuthorizedResource extends Resource {
     methodAccess: IMethodAccess;
     maxDays: number;
+    static ROLES: {
+        USER: string;
+        SUPER_USER: string;
+        MODERATOR: string;
+        ADMIN: string;
+    };
     permissions: IMethodAccess;
     isTokenExpired(createdAt: Date): boolean;
     getRoles(id: string): mongoose.Promise<mongoose.Document>;

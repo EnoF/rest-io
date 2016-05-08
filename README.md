@@ -7,11 +7,14 @@ Small extendable REST framework for express and mongoose. [![wercker status](htt
 $ npm install rest-io --save
 ```
 
-## New in v4.2.0
-- Updated documentation to ES6 style
-- Updated to Typescript 1.8
-- Updated to Typings from TSD
-- Typescript definitions are now automatically loaded
+## Versioning
+This project is not using Semantic Versioning. Instead we are using
+[Feature Versioning](https://github.com/EnoF/featver)
+
+## New in v5.0.0
+- Roles can now be updated via the API with Authorization rights
+*Note only ADMIN users can modify roles in this implementation,
+extend `UserResource` for a more specific implementation*
 
 ## Features
 - Custom Resource declarations
@@ -28,6 +31,7 @@ $ npm install rest-io --save
 - pluralize used for automatic pluralizing
 - all resources are [searchable](/docs/search.md)
 - all resources have [population](/docs/populate.md) controllable
+- Typescript definitions are automatically loaded
 
 Roadmap
 - More default operations:
@@ -41,6 +45,8 @@ Roadmap
 - [Resource](/docs/api.md)
 - [AuthorizedResource](/docs/authorizedResource.md)
 - [UserResource](/docs/user.md)
+- [Search](/docs/search.md)
+- [Population](/docs/populate.md)
 
 ## Quick Start
 It's easy and fast to use rest.io. To start using rest.io see the next few steps:
