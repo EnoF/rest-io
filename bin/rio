@@ -5,6 +5,8 @@ const package = require('../package.json');
 const fs = require('fs');
 const version = package.version;
 
+require('ts-node/register');
+
 console.log(`
   ______ _______ _______ _______     _____  _____
  |_____/ |______ |______    |    ___   |   |     |
@@ -18,9 +20,12 @@ rio.option('-s, --src [value]', 'specify the target directory', src =>
   .option('-o, --out [value]', 'specify the output directory', out =>
     out);
 
-rio.command('gen-docs')
+rio.command('generate-docs')
+  .alias('gd')
   .description('generate swagger docs from the rest-io resource models')
   .action((options) => {
+    if (!isValid()) return;
+
     notifyGenerationParams();
     console.log('--- Resources ---');
     displayResources(rio.src);
@@ -30,6 +35,20 @@ rio.command('gen-docs')
 rio.parse(process.argv);
 
 if (!rio.src || !rio.out) rio.help();
+
+function isValid() {
+  try {
+    if (!rio.src) throw new Error('Invalid source provided');
+    if (!rio.out) throw new Error('Invalid output directory provided');
+    return true;
+  } catch (error) {
+    console.log('--- ERROR ---');
+    console.error(error);
+    console.log('--- ERROR ---');
+    rio.help();
+    return false;
+  }
+}
 
 function notifyGenerationParams() {
   console.log('Swagger documentation - generation');
